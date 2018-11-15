@@ -42,8 +42,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        float lat = (float) 48.7252998;
-        float longitude = (float) 2.3594401;
+        double lat = 48.7252998;
+        double longitude =  2.3594401;
         // Add a marker in Sydney and move the camera
         LatLng airport = new LatLng( lat , longitude);
         float zoomLevel = (float) 14.0;
