@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SuperProjetAvion</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="airport"></string>
 </resources>
