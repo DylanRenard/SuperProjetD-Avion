@@ -53,7 +53,7 @@ public class CodeInfo {
 
 
     void onDecode() {
-        decode_location = airport.airportName;
+        decode_location = airport.getAirportName();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddHHmm", Locale.getDefault());
         try {

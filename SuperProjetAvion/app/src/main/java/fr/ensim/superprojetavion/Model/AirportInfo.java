@@ -1,7 +1,10 @@
 package fr.ensim.superprojetavion.Model;
 
 
-public class AirportInfo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class AirportInfo implements Parcelable{
     private String oaciCode;
     private String airportName;
     private double latitude;
@@ -11,9 +14,45 @@ public class AirportInfo {
     private String flag;
     private String location;
 
+    private boolean favoris;
+
+    public AirportInfo(){}
+
+    protected AirportInfo(Parcel in) {
+        oaciCode = in.readString();
+        airportName = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        phoneNumber = in.readString();
+        timeZone = in.readString();
+        flag = in.readString();
+        location = in.readString();
+        favoris = in.readByte() != 0;
+    }
+
+    public static final Creator<AirportInfo> CREATOR = new Creator<AirportInfo>() {
+        @Override
+        public AirportInfo createFromParcel(Parcel in) {
+            return new AirportInfo(in);
+        }
+
+        @Override
+        public AirportInfo[] newArray(int size) {
+            return new AirportInfo[size];
+        }
+    };
+
     @Override
     public String toString(){
         return "name : "+this.airportName+"\noaci : "+this.oaciCode+"\nCoords : "+this.latitude+"/"+this.longitude;
+    }
+
+    public boolean isfavoris() {
+        return favoris;
+    }
+
+    public void setfavoris(boolean favoris) {
+        this.favoris = favoris;
     }
 
     public String getOaciCode() {
@@ -78,5 +117,23 @@ public class AirportInfo {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(oaciCode);
+        parcel.writeString(airportName);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
+        parcel.writeString(phoneNumber);
+        parcel.writeString(timeZone);
+        parcel.writeString(flag);
+        parcel.writeString(location);
+        parcel.writeByte((byte) (favoris ? 1 : 0));
     }
 }
