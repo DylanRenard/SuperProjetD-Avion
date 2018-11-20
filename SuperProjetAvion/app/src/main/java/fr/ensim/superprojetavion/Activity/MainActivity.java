@@ -2,9 +2,8 @@ package fr.ensim.superprojetavion.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,19 +17,17 @@ import java.util.ArrayList;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.R;
-import fr.ensim.superprojetavion.Service.oaciService;
+import fr.ensim.superprojetavion.Service.OaciService;
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<AirportInfo> favorisList;
-    AirportInfo result;
+    AirportInfo result = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        result = null;
 
         TextView t = findViewById(R.id.test);
         t.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                result = oaciService.getAirportInfo(oaci);
+                result = OaciService.getAirportInfo(oaci);
 
                 Intent i = new Intent(MainActivity.this, SearchActivity.class);
                 i.putExtra("result", result);

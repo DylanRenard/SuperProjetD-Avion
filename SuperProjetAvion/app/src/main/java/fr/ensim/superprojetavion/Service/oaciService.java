@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 
-public class oaciService {
+public class OaciService {
     public static AirportInfo getAirportInfo(String oaci){
 
         try {
