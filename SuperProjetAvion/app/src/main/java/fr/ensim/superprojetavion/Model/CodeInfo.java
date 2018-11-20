@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static java.sql.Types.NULL;
+
 /**
  * Created by Dana on 15/11/2018.
  */
@@ -63,109 +65,158 @@ public class CodeInfo {
 
 
         // B)
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddHHmm", Locale.getDefault());
-        try {
-            Date date = dateFormat.parse(code_date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (!code_date.equals(NULL)){
+            decode_date = getDate(code_date).toString();
         }
-        decode_date = code_date.toString();
 
 
         // C)
-        // TO DO
+        if(!code_idRunway.equals(NULL)) {
+            if (code_idRunway.equals("88")) {
+                decode_idRunway = "ALL RUNWAYS";
+            } else {
+                decode_idRunway = "RUNWAY " + code_idRunway;
+            }
+        }
 
         // D)
-        decode_clearedRunwayLength = " CLEARED RUNWAY LENGTH " + code_clearedRunwayLength + "M";
+        if (!code_clearedRunwayLength.equals(NULL)) {
+            decode_clearedRunwayLength = " CLEARED RUNWAY LENGTH " + code_clearedRunwayLength + "M";
+        }
 
 
         // E)
-        String axis="";
-        String [] clearedRunwayWidth = code_clearedRunwayWidth.split("");
+        if(!code_clearedRunwayWidth.equals(NULL)) {
+            String axis = "";
+            String[] clearedRunwayWidth = code_clearedRunwayWidth.split("");
+            if (clearedRunwayWidth[clearedRunwayWidth.length - 1].equals("L")) {
+                axis = "LEFT";
+            } else {
+                axis = "RIGHT";
+            }
 
-        if (clearedRunwayWidth[clearedRunwayWidth.length -1].equals("L")){
-            axis = "LEFT";
-        }
-        else {
-            axis = "RIGHT";
-        }
-
-        if (clearedRunwayWidth.length == 2) {
-            decode_clearedRunwayWidth = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + "M " + axis;
-        }
-        else {
-            decode_clearedRunwayWidth = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + clearedRunwayWidth[1] + "M " + axis;
+            if (clearedRunwayWidth.length == 2) {
+                decode_clearedRunwayWidth = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + "M " + axis;
+            } else {
+                decode_clearedRunwayWidth = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + clearedRunwayWidth[1] + "M " + axis;
+            }
         }
 
 
         // F)
-        String [] conditionsRunway = code_conditionsRunway.split("/");
-        decode_conditionsRunway = "Threshold: " + switchConditions(conditionsRunway[0]) + " / "
-                                 + "Mid runway: " + switchConditions(conditionsRunway[1]) + " / "
-                                 + "Roll out: " + switchConditions(conditionsRunway[2]) ;
+        if (!code_conditionsRunway.equals(NULL)) {
+            String[] conditionsRunway = code_conditionsRunway.split("/");
+            decode_conditionsRunway = "Threshold: " + switchConditions(conditionsRunway[0]) + " / "
+                    + "Mid runway: " + switchConditions(conditionsRunway[1]) + " / "
+                    + "Roll out: " + switchConditions(conditionsRunway[2]);
+        }
 
 
         // G)
-        String[] thickness = code_thickness.split("/");
-        decode_thickness = "MEAN DEPTH Threshold: " + thickness[0] + "mm / "
-                            + "Mid runway: " + thickness[1] + "mm / "
-                            + "Roll out: " + thickness[2] + "mm";
+        if (!code_thickness.equals(NULL)) {
+            String[] thickness = code_thickness.split("/");
+            decode_thickness = "MEAN DEPTH Threshold: " + thickness[0] + "mm / "
+                    + "Mid runway: " + thickness[1] + "mm / "
+                    + "Roll out: " + thickness[2] + "mm";
+        }
 
 
         // H)
-        String[] frictionCoefInstru = code_frictionCoef.split(" ");  // Separates coef and instrument
-        String[] frictionCoef = frictionCoefInstru[0].split("/");    // Separates all coef
-        String[] frictionCoefValue={"","",""};                            // Contains values of coef
-        if(frictionCoef[0].length() == 1){
-            frictionCoefValue = switchEstimatedCoef(frictionCoef);
+        if(!code_frictionCoef.equals(NULL)) {
+            String[] frictionCoefInstru = code_frictionCoef.split(" ");  // Separates coef and instrument
+            String[] frictionCoef = frictionCoefInstru[0].split("/");    // Separates all coef
+            String[] frictionCoefValue = {"", "", ""};                            // Contains values of coef
+            if (frictionCoef[0].length() == 1) {
+                frictionCoefValue = switchEstimatedCoef(frictionCoef);
+            } else {
+                frictionCoefValue = switchCalculatedCoef(frictionCoef);
+            }
+            decode_frictionCoef = "BRAKING ACTION Threshold: " + frictionCoefValue[0] + " / " +
+                    "Mid runway: " + frictionCoefValue[1] + " / " +
+                    "Roll out: " + frictionCoefValue[2] + " " +
+                    "Instrument: " + switchInstrument(frictionCoefInstru[1]);
         }
-        else{
-            frictionCoefValue = switchCalculatedCoef(frictionCoef);
-        }
-        decode_frictionCoef = "BRAKING ACTION Threshold: " + frictionCoefValue[0] +  " / " +
-                                "Mid runway: " + frictionCoefValue[1] + " / " +
-                                "Roll out: " + frictionCoefValue[2] + " " +
-                                "Instrument: " + switchInstrument(frictionCoefInstru[1]);
 
 
         // J)
-        String[] criticalSnowbanks = code_criticalSnowbanks.split("/");
-        String directionDistance = criticalSnowbanks[1];
-        String distance = "";
-        String direction ="";
-        if(directionDistance.length() == 2 ){
-            distance = directionDistance.substring(0,1);
-            direction =directionDistance.substring(2);
-        }
-        if (directionDistance.length() == 3){
-            if (directionDistance.substring(2,3).equals("L")){
-                
-            }
-        }
+        if(!code_criticalSnowbanks.equals(NULL)) {
+            String[] criticalSnowbanks = code_criticalSnowbanks.split("/");
+            String directionDistance = criticalSnowbanks[1];
+            String[] directionAndDistance = {"", ""};
+            directionAndDistance = directionDistanceCriticalSnowbanks(directionDistance);
 
-        decode_criticalSnowbanks = "CRITICAL SNOW BANK " + criticalSnowbanks[0] + "cm / " +
-                                    distance + "m" + direction + " of Runway";
+            decode_criticalSnowbanks = "CRITICAL SNOW BANK " + criticalSnowbanks[0] + "cm / " +
+                    directionAndDistance[0] + "m " + getDirection(directionAndDistance[1]) + " of Runway";
+        }
 
 
         // K)
+        if(!code_lightsObscured.equals(NULL)) {
+            String[] lightsObscured = code_lightsObscured.split(" ");
+            decode_lightsObscured = "Lights obscured: " + lightsObscured[0] + " " +
+                    getDirection(lightsObscured[1]) + " of RUNWAY";
+        }
+
 
         // L)
+        if(!code_furtherClearance.equals(NULL)) {
+            String[] furtherClearance = code_furtherClearance.split("/");
+            decode_furtherClearance = "FURTHER CLEARANCE " + furtherClearance[0] + "m / " +
+                    furtherClearance[1] + "m";
+        }
+
 
         // M)
+        if(!code_anticipatedTimecompletion.equals(NULL)) {
+            decode_anticipatedTimecompletion = "Anticipated time of completion " + code_anticipatedTimecompletion + " UTC";
+        }
+
 
         // N)
+        if(!code_taxiwaysState.equals(NULL)) {
+            decode_taxiwaysState = "Taxiway " + code_taxiwaysState.substring(0, 1) + " : " +
+                    switchConditions(code_taxiwaysState.substring(1));
+        }
+
 
         // P)
+        if(!code_snowBanks.equals(NULL)) {
+            decode_snowBanks = "SNOW BANKS : YES SPACE" + code_snowBanks.substring(3) + "m";
+        }
 
 
         // R)
+        if(!code_parking.equals(NULL)) {
+            String[] usabilityParking = decode_parking.split(" ");
+            String usability = "";
+            if (usabilityParking[1].equals("NO")) {
+                usability = "UNUSABLE";
+            }
+            decode_parking = "Parking " + usabilityParking[0] + " " + usability;
+        }
+
 
         // S)
-
-
+        if(!code_nextObservation.equals(NULL)) {
+            decode_nextObservation = "NEXT OBSERVATION : " + getDate(code_nextObservation).toString() + "UTC";
+        }
         // T)
+        if (!code_comment.equals(NULL)) {
+            decode_comment = code_comment;
+        }
 
+    }
 
+    // DATE FONCTION
+    Date getDate(String chain){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddHHmm", Locale.getDefault());
+        Date date = null;
+        try {
+            date = dateFormat.parse(chain);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     // F) FONCTIONS
@@ -259,7 +310,7 @@ public class CodeInfo {
 
     String switchInstrument(String letters){
         String instrument ="";
-        switch (letters.toLowerCase()){
+        switch (letters){
             case "BRD":
                 instrument="Brakemeter-Dynometer";
                 break;
@@ -294,7 +345,69 @@ public class CodeInfo {
         return  instrument;
     }
 
+    // J) FONCTIONS
+    String[] directionDistanceCriticalSnowbanks (String chain){
+        String distance = "";
+        String direction ="";
+        String[] distanceAndDirection= {"",""};
+        switch (chain.length()){
+            case 2:
+                distance = chain.substring(0,1);
+                direction =chain.substring(1);
+                break;
+            case 3:
+                if (chain.substring(1,2).equals("L")){          // EXAMPLE : 3LR
+                    distance = chain.substring(0,1);
+                    direction = chain.substring(1);
+                }
+                else{                                           // EXAMPLE : 15L
+                    distance = chain.substring(0,2);
+                    direction = chain.substring(2);
+                }
+                break;
+            case 4:
+                if (chain.substring(2,3).equals("L")){          // EXAMPLE : 15LR
+                    distance = chain.substring(0,2);
+                    direction = chain.substring(2);
+                }
+                else {                                          // EXAMPLE : 110R
+                    distance = chain.substring(0,3);
+                    direction = chain.substring(3);
+                }
+                break;
+            case 5:
+                if (chain.substring(3,4).equals("L")){          // EXAMPLE : 110LR
+                    distance = chain.substring(0,3);
+                    direction = chain.substring(3);
+                }
+                else {                                          // EXAMPLE : 1124L
+                    distance = chain.substring(0,4);
+                    direction = chain.substring(4);
+                }
+        }
 
+        distanceAndDirection[0] = distance;
+        distanceAndDirection[1] = direction;
+        return  distanceAndDirection;
+    }
+
+    String getDirection(String chain){
+        String value="";
+        switch (chain){
+            case "L":
+                value = "LEFT";
+                break;
+            case "R":
+                value= "RIGHT";
+                break;
+            case "LR":
+                value = "LEFT AND RIGHT";
+                break;
+        }
+        return value;
+    }
+
+    // GETTERS SETTERS
     public AirportInfo getAirport() {
         return airport;
     }
