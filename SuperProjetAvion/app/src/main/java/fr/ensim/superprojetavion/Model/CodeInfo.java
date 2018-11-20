@@ -14,8 +14,45 @@ import java.util.TimeZone;
 
 public class CodeInfo {
 
-    public CodeInfo(SnowtamInfo snowtamInfo){
-        
+    public CodeInfo(String info, AirportInfo airportInfo){
+        this.airport = airportInfo;
+
+        this.code_location = airportInfo.getOaciCode();
+        if(info.contains("B) ")) this.code_date = info.substring(info.indexOf("B) ")+3,info.indexOf(')',info.indexOf("B) ")+2)-1);
+        else this.code_date = null;
+        if(info.contains("C) ")) this.code_idRunway = info.substring(info.indexOf("C) ")+3,info.indexOf(')',info.indexOf("C) ")+2)-1);
+        else this.code_idRunway = null;
+        if(info.contains("D) ")) this.code_clearedRunwayLength = info.substring(info.indexOf("D) ")+3,info.indexOf(')',info.indexOf("D) ")+2)-1);
+        else this.code_clearedRunwayLength = null;
+        if(info.contains("E) ")) this.code_clearedRunwayWidth = info.substring(info.indexOf("E) ")+3,info.indexOf(')',info.indexOf("E) ")+2)-1);
+        else this.code_clearedRunwayWidth = null;
+        if(info.contains("F) ")) this.code_conditionsRunway = info.substring(info.indexOf("F) ")+3,info.indexOf(')',info.indexOf("F) ")+2)-1);
+        else this.code_conditionsRunway = null;
+        if(info.contains("G) ")) this.code_thickness = info.substring(info.indexOf("G) ")+3,info.indexOf(')',info.indexOf("G) ")+2)-1);
+        else this.code_thickness = null;
+        if(info.contains("H) ")) this.code_frictionCoef = info.substring(info.indexOf("H) ")+3,info.indexOf(')',info.indexOf("H) ")+2)-1);
+        else this.code_frictionCoef = null;
+        if(info.contains("J) ")) this.code_criticalSnowbanks = info.substring(info.indexOf("J) ")+3,info.indexOf(')',info.indexOf("J) ")+2)-1);
+        else this.code_criticalSnowbanks = null;
+        if(info.contains("K) ")) this.code_lightsObscured = info.substring(info.indexOf("K) ")+3,info.indexOf(')',info.indexOf("K) ")+2)-1);
+        else this.code_lightsObscured = null;
+        if(info.contains("L) ")) this.code_furtherClearance = info.substring(info.indexOf("L) ")+3,info.indexOf(')',info.indexOf("L) ")+2)-1);
+        else this.code_furtherClearance = null;
+        if(info.contains("M) ")) this.code_anticipatedTimecompletion = info.substring(info.indexOf("M) ")+3,info.indexOf(')',info.indexOf("M) ")+2)-1);
+        else this.code_anticipatedTimecompletion = null;
+        if(info.contains("N) ")) this.code_taxiwaysState = info.substring(info.indexOf("N) ")+3,info.indexOf(')',info.indexOf("N) ")+2)-1);
+        else this.code_taxiwaysState = null;
+        if(info.contains("P) ")) this.code_snowBanks = info.substring(info.indexOf("P) ")+3,info.indexOf(')',info.indexOf("P) ")+2)-1);
+        else this.code_snowBanks = null;
+        if(info.contains("R) ")) this.code_parking = info.substring(info.indexOf("R) ")+3,info.indexOf(')',info.indexOf("R) ")+2)-1);
+        else this.code_parking = null;
+        if(info.contains("S) ")) this.code_nextObservation = info.substring(info.indexOf("S) ")+3,info.indexOf(')',info.indexOf("S) ")+2)-1);
+        else this.code_nextObservation = null;
+        if(info.contains("T) ")) this.code_comment = info.substring(info.indexOf("T) ")+3,info.indexOf(')',info.indexOf("T) ")+2)-1);
+        else this.code_comment = null;
+
+        Log.d("TEST SNOWTAM : ", this.code_location+"\n"+this.code_date+"\n"+this.code_idRunway+this.code_clearedRunwayLength);
+        //this.onDecode();
     }
 
     private AirportInfo airport;

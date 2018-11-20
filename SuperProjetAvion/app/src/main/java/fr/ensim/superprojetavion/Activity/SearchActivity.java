@@ -8,12 +8,12 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.Model.CodeInfo;
-import fr.ensim.superprojetavion.Model.DataSearchSnowtam;
-import fr.ensim.superprojetavion.Model.SnowtamInfo;
 import fr.ensim.superprojetavion.R;
 import fr.ensim.superprojetavion.Service.SnowtamService;
 
@@ -32,29 +32,32 @@ public class SearchActivity extends AppCompatActivity {
 
         Log.d("test parcelable : ", result.toString() );
 
-        Response.Listener<DataSearchSnowtam> responseListener = new Response.Listener<DataSearchSnowtam>() {
+        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(DataSearchSnowtam response) {
-                List<SnowtamInfo> notamList;
-                SnowtamInfo snowtamInfo = null;
+            public void onResponse(JSONArray response) {
+                String snowtamInfo = null;
+                int i;
 
-                notamList = response.getData();
+                try{
+                    for (i=0 ; i<response.length() ; i++) {
+                        JSONObject info = response.getJSONObject(i);
 
-                for (SnowtamInfo n : notamList) {
-                    if(n.getId().contains("SW")){
-                        snowtamInfo = n;
-                        break;
+                        if(info.getString("id").contains("SW")){
+                            snowtamInfo = info.getString("all");
+                        }
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-                snowtam = new CodeInfo(snowtamInfo);
+                if(snowtamInfo!=null) snowtam = new CodeInfo(snowtamInfo,result);
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                error.printStackTrace();
             }
         };
 

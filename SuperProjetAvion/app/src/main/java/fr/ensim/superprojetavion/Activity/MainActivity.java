@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                search("lfpg");
+                search("enbr".toUpperCase());
             }
         });
 

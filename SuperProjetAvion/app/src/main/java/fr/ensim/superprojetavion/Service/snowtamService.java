@@ -4,9 +4,8 @@ import android.content.Context;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
-import fr.ensim.superprojetavion.Model.SnowtamInfo;
 
 public class SnowtamService {
 
@@ -18,7 +17,7 @@ public class SnowtamService {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        GsonRequest<SnowtamInfo> request = new GsonRequest<>(url, SnowtamInfo.class,null,responseListener, errorListener);
+        JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
 
         queue.add(request);
     }
