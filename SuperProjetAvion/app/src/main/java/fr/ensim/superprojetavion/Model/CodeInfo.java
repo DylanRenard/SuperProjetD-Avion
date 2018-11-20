@@ -6,9 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
-
-import static java.sql.Types.NULL;
 
 /**
  * Created by Dana on 15/11/2018.
@@ -54,7 +51,8 @@ public class CodeInfo {
         else this.code_comment = null;
 
         Log.d("TEST SNOWTAM : ", this.code_location+"\n"+this.code_date+"\n"+this.code_idRunway+this.code_clearedRunwayLength);
-        //this.onDecode();
+        this.onDecode();
+        Log.d("TEST SNOWTAM DECODE : ", this.decode_location+"\n"+this.decode_date+"\n"+this.decode_idRunway+this.decode_clearedRunwayLength);
     }
 
     private AirportInfo airport;
@@ -102,13 +100,13 @@ public class CodeInfo {
 
 
         // B)
-        if (!code_date.equals(NULL)){
+        if (code_date!=null){
             decode_date = getDate(code_date).toString();
         }
 
 
         // C)
-        if(!code_idRunway.equals(NULL)) {
+        if(code_idRunway!=null) {
             if (code_idRunway.equals("88")) {
                 decode_idRunway = "ALL RUNWAYS";
             } else {
@@ -117,13 +115,13 @@ public class CodeInfo {
         }
 
         // D)
-        if (!code_clearedRunwayLength.equals(NULL)) {
+        if (code_clearedRunwayLength!=null) {
             decode_clearedRunwayLength = " CLEARED RUNWAY LENGTH " + code_clearedRunwayLength + "M";
         }
 
 
         // E)
-        if(!code_clearedRunwayWidth.equals(NULL)) {
+        if(code_clearedRunwayWidth!=null) {
             String axis = "";
             String[] clearedRunwayWidth = code_clearedRunwayWidth.split("");
             if (clearedRunwayWidth[clearedRunwayWidth.length - 1].equals("L")) {
@@ -141,7 +139,7 @@ public class CodeInfo {
 
 
         // F)
-        if (!code_conditionsRunway.equals(NULL)) {
+        if (code_conditionsRunway!=null) {
             String[] conditionsRunway = code_conditionsRunway.split("/");
             decode_conditionsRunway = "Threshold: " + switchConditions(conditionsRunway[0]) + " / "
                     + "Mid runway: " + switchConditions(conditionsRunway[1]) + " / "
@@ -150,7 +148,7 @@ public class CodeInfo {
 
 
         // G)
-        if (!code_thickness.equals(NULL)) {
+        if (code_thickness!=null) {
             String[] thickness = code_thickness.split("/");
             decode_thickness = "MEAN DEPTH Threshold: " + thickness[0] + "mm / "
                     + "Mid runway: " + thickness[1] + "mm / "
@@ -159,15 +157,18 @@ public class CodeInfo {
 
 
         // H)
-        if(!code_frictionCoef.equals(NULL)) {
+        if(code_frictionCoef!=null) {
             String[] frictionCoefInstru = code_frictionCoef.split(" ");  // Separates coef and instrument
             String[] frictionCoef = frictionCoefInstru[0].split("/");    // Separates all coef
             String[] frictionCoefValue = {"", "", ""};                            // Contains values of coef
+
+            Log.d("DECODE : ", frictionCoef[0]+"_\t_"+frictionCoef[1]+"_\t_"+frictionCoef[2]+"_");
             if (frictionCoef[0].length() == 1) {
                 frictionCoefValue = switchEstimatedCoef(frictionCoef);
             } else {
                 frictionCoefValue = switchCalculatedCoef(frictionCoef);
             }
+            Log.d("DECODE : ", frictionCoefValue[0]+"\t"+frictionCoefValue[1]+"\t"+frictionCoefValue[2]);
             decode_frictionCoef = "BRAKING ACTION Threshold: " + frictionCoefValue[0] + " / " +
                     "Mid runway: " + frictionCoefValue[1] + " / " +
                     "Roll out: " + frictionCoefValue[2] + " " +
@@ -176,7 +177,7 @@ public class CodeInfo {
 
 
         // J)
-        if(!code_criticalSnowbanks.equals(NULL)) {
+        if(code_criticalSnowbanks!=null) {
             String[] criticalSnowbanks = code_criticalSnowbanks.split("/");
             String directionDistance = criticalSnowbanks[1];
             String[] directionAndDistance = {"", ""};
@@ -188,7 +189,7 @@ public class CodeInfo {
 
 
         // K)
-        if(!code_lightsObscured.equals(NULL)) {
+        if(code_lightsObscured!=null) {
             String[] lightsObscured = code_lightsObscured.split(" ");
             decode_lightsObscured = "Lights obscured: " + lightsObscured[0] + " " +
                     getDirection(lightsObscured[1]) + " of RUNWAY";
@@ -196,7 +197,7 @@ public class CodeInfo {
 
 
         // L)
-        if(!code_furtherClearance.equals(NULL)) {
+        if(code_furtherClearance!=null) {
             String[] furtherClearance = code_furtherClearance.split("/");
             decode_furtherClearance = "FURTHER CLEARANCE " + furtherClearance[0] + "m / " +
                     furtherClearance[1] + "m";
@@ -204,26 +205,26 @@ public class CodeInfo {
 
 
         // M)
-        if(!code_anticipatedTimecompletion.equals(NULL)) {
+        if(code_anticipatedTimecompletion!=null) {
             decode_anticipatedTimecompletion = "Anticipated time of completion " + code_anticipatedTimecompletion + " UTC";
         }
 
 
         // N)
-        if(!code_taxiwaysState.equals(NULL)) {
+        if(code_taxiwaysState!=null) {
             decode_taxiwaysState = "Taxiway " + code_taxiwaysState.substring(0, 1) + " : " +
                     switchConditions(code_taxiwaysState.substring(1));
         }
 
 
         // P)
-        if(!code_snowBanks.equals(NULL)) {
+        if(code_snowBanks!=null) {
             decode_snowBanks = "SNOW BANKS : YES SPACE" + code_snowBanks.substring(3) + "m";
         }
 
 
         // R)
-        if(!code_parking.equals(NULL)) {
+        if(code_parking!=null) {
             String[] usabilityParking = decode_parking.split(" ");
             String usability = "";
             if (usabilityParking[1].equals("NO")) {
@@ -234,11 +235,11 @@ public class CodeInfo {
 
 
         // S)
-        if(!code_nextObservation.equals(NULL)) {
+        if(code_nextObservation!=null) {
             decode_nextObservation = "NEXT OBSERVATION : " + getDate(code_nextObservation).toString() + "UTC";
         }
         // T)
-        if (!code_comment.equals(NULL)) {
+        if (code_comment!=null) {
             decode_comment = code_comment;
         }
 
