@@ -14,35 +14,48 @@ import java.util.Locale;
 public class CodeInfo {
 
     public CodeInfo(String info, AirportInfo airportInfo){
-        this.airport = airportInfo;
+        int i=0;
 
+        //A
+        this.airport = airportInfo;
+        //B
         this.code_location = airportInfo.getOaciCode();
-        if(info.contains("B) ")) this.code_date = info.substring(info.indexOf("B) ")+3,info.indexOf(')',info.indexOf("B) ")+2)-1);
+        if(info.contains("B) ")) {
+            this.code_date = info.substring(info.indexOf("B) ")+3,info.indexOf(')',info.indexOf("B) ")+2)-1);
+            info = info.substring(info.indexOf(')',info.indexOf("B) ")+2)-1);
+        }
         else this.code_date = null;
-        if(info.contains("C) ")) this.code_idRunway = info.substring(info.indexOf("C) ")+3,info.indexOf(')',info.indexOf("C) ")+2)-1);
-        else this.code_idRunway = null;
-        if(info.contains("D) ")) this.code_clearedRunwayLength = info.substring(info.indexOf("D) ")+3,info.indexOf(')',info.indexOf("D) ")+2)-1);
-        else this.code_clearedRunwayLength = null;
-        if(info.contains("E) ")) this.code_clearedRunwayWidth = info.substring(info.indexOf("E) ")+3,info.indexOf(')',info.indexOf("E) ")+2)-1);
-        else this.code_clearedRunwayWidth = null;
-        if(info.contains("F) ")) this.code_conditionsRunway = info.substring(info.indexOf("F) ")+3,info.indexOf(')',info.indexOf("F) ")+2)-1);
-        else this.code_conditionsRunway = null;
-        if(info.contains("G) ")) this.code_thickness = info.substring(info.indexOf("G) ")+3,info.indexOf(')',info.indexOf("G) ")+2)-1);
-        else this.code_thickness = null;
-        if(info.contains("H) ")) this.code_frictionCoef = info.substring(info.indexOf("H) ")+3,info.indexOf(')',info.indexOf("H) ")+2)-1);
-        else this.code_frictionCoef = null;
-        if(info.contains("J) ")) this.code_criticalSnowbanks = info.substring(info.indexOf("J) ")+3,info.indexOf(')',info.indexOf("J) ")+2)-1);
-        else this.code_criticalSnowbanks = null;
-        if(info.contains("K) ")) this.code_lightsObscured = info.substring(info.indexOf("K) ")+3,info.indexOf(')',info.indexOf("K) ")+2)-1);
-        else this.code_lightsObscured = null;
-        if(info.contains("L) ")) this.code_furtherClearance = info.substring(info.indexOf("L) ")+3,info.indexOf(')',info.indexOf("L) ")+2)-1);
-        else this.code_furtherClearance = null;
-        if(info.contains("M) ")) this.code_anticipatedTimecompletion = info.substring(info.indexOf("M) ")+3,info.indexOf(')',info.indexOf("M) ")+2)-1);
-        else this.code_anticipatedTimecompletion = null;
-        if(info.contains("N) ")) this.code_taxiwaysState = info.substring(info.indexOf("N) ")+3,info.indexOf(')',info.indexOf("N) ")+2)-1);
-        else this.code_taxiwaysState = null;
-        if(info.contains("P) ")) this.code_snowBanks = info.substring(info.indexOf("P) ")+3,info.indexOf(')',info.indexOf("P) ")+2)-1);
-        else this.code_snowBanks = null;
+
+        while(info.contains("C) ")){
+            if(info.contains("C) ")) this.code_idRunway[i] = info.substring(info.indexOf("C) ")+3,info.indexOf(')',info.indexOf("C) ")+2)-1);
+            else this.code_idRunway = null;
+            if(info.contains("D) ")) this.code_clearedRunwayLength[i] = info.substring(info.indexOf("D) ")+3,info.indexOf(')',info.indexOf("D) ")+2)-1);
+            else this.code_clearedRunwayLength = null;
+            if(info.contains("E) ")) this.code_clearedRunwayWidth[i] = info.substring(info.indexOf("E) ")+3,info.indexOf(')',info.indexOf("E) ")+2)-1);
+            else this.code_clearedRunwayWidth = null;
+            if(info.contains("F) ")) this.code_conditionsRunway[i] = info.substring(info.indexOf("F) ")+3,info.indexOf(')',info.indexOf("F) ")+2)-1);
+            else this.code_conditionsRunway = null;
+            if(info.contains("G) ")) this.code_thickness[i] = info.substring(info.indexOf("G) ")+3,info.indexOf(')',info.indexOf("G) ")+2)-1);
+            else this.code_thickness = null;
+            if(info.contains("H) ")) this.code_frictionCoef[i] = info.substring(info.indexOf("H) ")+3,info.indexOf(')',info.indexOf("H) ")+2)-1);
+            else this.code_frictionCoef = null;
+            if(info.contains("J) ")) this.code_criticalSnowbanks[i] = info.substring(info.indexOf("J) ")+3,info.indexOf(')',info.indexOf("J) ")+2)-1);
+            else this.code_criticalSnowbanks = null;
+            if(info.contains("K) ")) this.code_lightsObscured[i] = info.substring(info.indexOf("K) ")+3,info.indexOf(')',info.indexOf("K) ")+2)-1);
+            else this.code_lightsObscured = null;
+            if(info.contains("L) ")) this.code_furtherClearance[i] = info.substring(info.indexOf("L) ")+3,info.indexOf(')',info.indexOf("L) ")+2)-1);
+            else this.code_furtherClearance = null;
+            if(info.contains("M) ")) this.code_anticipatedTimecompletion[i] = info.substring(info.indexOf("M) ")+3,info.indexOf(')',info.indexOf("M) ")+2)-1);
+            else this.code_anticipatedTimecompletion = null;
+            if(info.contains("N) ")) this.code_taxiwaysState[i] = info.substring(info.indexOf("N) ")+3,info.indexOf(')',info.indexOf("N) ")+2)-1);
+            else this.code_taxiwaysState[i] = null;
+            if(info.contains("P) ")) this.code_snowBanks[i] = info.substring(info.indexOf("P) ")+3,info.indexOf(')',info.indexOf("P) ")+2)-1);
+            else this.code_snowBanks = null;
+
+            info = info.substring(info.indexOf("C)",info.indexOf("C)"+1)));
+            i++;
+        }
+
         if(info.contains("R) ")) this.code_parking = info.substring(info.indexOf("R) ")+3,info.indexOf(')',info.indexOf("R) ")+2)-1);
         else this.code_parking = null;
         if(info.contains("S) ")) this.code_nextObservation = info.substring(info.indexOf("S) ")+3,info.indexOf(')',info.indexOf("S) ")+2)-1);
@@ -57,44 +70,48 @@ public class CodeInfo {
 
     private AirportInfo airport;
 
+    //ATTENTION CHAMPS C à P PEUVENT ETRE MULTIPLE
     private String code_location;                       // A) aerodrome location indicator
     private String code_date;                           // B) observation date & time
-    private String code_idRunway;                       // C) runway designator
-    private String code_clearedRunwayLength;            // D) cleared runway length
-    private String code_clearedRunwayWidth;             // E) cleared runway width
-    private String code_conditionsRunway;               // F) deposits over total runway length
-    private String code_thickness;                      // G) mean depth deposit for each third of total runway length
-    private String code_frictionCoef;                   // H) friction measurements and friction measurement device
-    private String code_criticalSnowbanks;              // J) critical snowbanks
-    private String code_lightsObscured;                 // K) runway lights
-    private String code_furtherClearance;               // L) further clearance
-    private String code_anticipatedTimecompletion;      // M) further clearance expected to be completed
-    private String code_taxiwaysState;                  // N) taxiway
-    private String code_snowBanks;                      // P) taxiway snowbanks
+    private String[] code_idRunway;                       // C) runway designator
+    private String[] code_clearedRunwayLength;            // D) cleared runway length
+    private String[] code_clearedRunwayWidth;             // E) cleared runway width
+    private String[] code_conditionsRunway;               // F) deposits over total runway length
+    private String[] code_thickness;                      // G) mean depth deposit for each third of total runway length
+    private String[] code_frictionCoef;                   // H) friction measurements and friction measurement device
+    private String[] code_criticalSnowbanks;              // J) critical snowbanks
+    private String[] code_lightsObscured;                 // K) runway lights
+    private String[] code_furtherClearance;               // L) further clearance
+    private String[] code_anticipatedTimecompletion;      // M) further clearance expected to be completed
+    private String[] code_taxiwaysState;                  // N) taxiway
+    private String[] code_snowBanks;                      // P) taxiway snowbanks
     private String code_parking;                        // R) apron
     private String code_nextObservation;                // S) next planned observation/measurement
     private String code_comment;                        // T) plain-language remarks
 
     private String decode_location;
     private String decode_date;
-    private String decode_idRunway;
-    private String decode_clearedRunwayLength;
-    private String decode_clearedRunwayWidth;
-    private String decode_conditionsRunway;
-    private String decode_thickness;
-    private String decode_frictionCoef;
-    private String decode_criticalSnowbanks;
-    private String decode_lightsObscured;
-    private String decode_furtherClearance;
-    private String decode_anticipatedTimecompletion;
-    private String decode_taxiwaysState;
-    private String decode_snowBanks;
+    private String[] decode_idRunway;
+    private String[] decode_clearedRunwayLength;
+    private String[] decode_clearedRunwayWidth;
+    private String[] decode_conditionsRunway;
+    private String[] decode_thickness;
+    private String[] decode_frictionCoef;
+    private String[] decode_criticalSnowbanks;
+    private String[] decode_lightsObscured;
+    private String[] decode_furtherClearance;
+    private String[] decode_anticipatedTimecompletion;
+    private String[] decode_taxiwaysState;
+    private String[] decode_snowBanks;
     private String decode_parking;
     private String decode_nextObservation;
     private String decode_comment;
 
 
     void onDecode() {
+        //itérateur
+        int i;
+
         // A)
         decode_location = airport.getAirportName();
 
@@ -108,127 +125,136 @@ public class CodeInfo {
         // C)
         if(code_idRunway!=null) {
             if (code_idRunway.equals("88")) {
-                decode_idRunway = "ALL RUNWAYS";
+                decode_idRunway[0] = "ALL RUNWAYS";
             } else {
-                decode_idRunway = "RUNWAY " + code_idRunway;
+                for(i=0 ; i<code_idRunway.length ; i++){
+                    decode_idRunway[i] = "RUNWAY " + code_idRunway[i];
+                }
             }
         }
 
         // D)
         if (code_clearedRunwayLength!=null) {
-            decode_clearedRunwayLength = " CLEARED RUNWAY LENGTH " + code_clearedRunwayLength + "M";
+            for(i=0 ; i<code_clearedRunwayLength.length ; i++){
+                decode_clearedRunwayLength[i] = " CLEARED RUNWAY LENGTH " + code_clearedRunwayLength[i] + "M";
+            }
         }
-
 
         // E)
         if(code_clearedRunwayWidth!=null) {
-            String axis = "";
-            String[] clearedRunwayWidth = code_clearedRunwayWidth.split("");
-            if (clearedRunwayWidth[clearedRunwayWidth.length - 1].equals("L")) {
-                axis = "LEFT";
-            } else {
-                axis = "RIGHT";
-            }
+            for(i=0 ; i<code_clearedRunwayWidth.length ; i++){
+                String axis = "";
+                String[] clearedRunwayWidth = code_clearedRunwayWidth[i].split("");
+                if (clearedRunwayWidth[clearedRunwayWidth.length - 1].equals("L")) {
+                    axis = "LEFT";
+                } else {
+                    axis = "RIGHT";
+                }
 
-            if (clearedRunwayWidth.length == 2) {
-                decode_clearedRunwayWidth = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + "M " + axis;
-            } else {
-                decode_clearedRunwayWidth = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + clearedRunwayWidth[1] + "M " + axis;
+                if (clearedRunwayWidth.length == 2) {
+                    decode_clearedRunwayWidth[i] = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + "M " + axis;
+                } else {
+                    decode_clearedRunwayWidth[i] = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + clearedRunwayWidth[1] + "M " + axis;
+                }
             }
         }
-
 
         // F)
         if (code_conditionsRunway!=null) {
-            String[] conditionsRunway = code_conditionsRunway.split("/");
-            decode_conditionsRunway = "Threshold: " + switchConditions(conditionsRunway[0]) + " / "
-                    + "Mid runway: " + switchConditions(conditionsRunway[1]) + " / "
-                    + "Roll out: " + switchConditions(conditionsRunway[2]);
+            for(i=0 ; i<code_conditionsRunway.length ; i++){
+                String[] conditionsRunway = code_conditionsRunway[i].split("/");
+                decode_conditionsRunway[i] = "Threshold: " + switchConditions(conditionsRunway[0]) + " / "
+                        + "Mid runway: " + switchConditions(conditionsRunway[1]) + " / "
+                        + "Roll out: " + switchConditions(conditionsRunway[2]);
+            }
         }
-
 
         // G)
         if (code_thickness!=null) {
-            String[] thickness = code_thickness.split("/");
-            decode_thickness = "MEAN DEPTH Threshold: " + thickness[0] + "mm / "
-                    + "Mid runway: " + thickness[1] + "mm / "
-                    + "Roll out: " + thickness[2] + "mm";
+            for(i=0 ; i<code_thickness.length ; i++){
+                String[] thickness = code_thickness[i].split("/");
+                decode_thickness[i] = "MEAN DEPTH Threshold: " + thickness[0] + "mm / "
+                        + "Mid runway: " + thickness[1] + "mm / "
+                        + "Roll out: " + thickness[2] + "mm";
+            }
         }
-
 
         // H)
-        Log.d("code friction", code_frictionCoef);
         if(code_frictionCoef!=null) {
-            String[] frictionCoefInstru = code_frictionCoef.split(" ");  // Separates coef and instrument
-            String[] frictionCoef = frictionCoefInstru[0].trim().split("/");    // Separates all coef
-            String[] frictionCoefValue = {"", "", ""};                            // Contains values of coef
-            String instru="";
+            for(i=0 ; i<code_frictionCoef.length ; i++){
+                String[] frictionCoefInstru = code_frictionCoef[i].split(" ");          // Separates coef and instrument
+                String[] frictionCoef = frictionCoefInstru[0].trim().split("/");        // Separates all coef
+                String[] frictionCoefValue = {"", "", ""};                                      // Contains values of coef
+                String instru="";
 
-            Log.d("DECODE : ", frictionCoef[0]+"_\t_"+frictionCoef[1]+"_\t_"+frictionCoef[2]+"_");
-            if (frictionCoef[0].length() == 1) {
-                frictionCoefValue = switchEstimatedCoef(frictionCoef);
-            } else {
-                frictionCoefValue = switchCalculatedCoef(frictionCoef);
+                if (frictionCoef[0].length() == 1) {
+                    frictionCoefValue = switchEstimatedCoef(frictionCoef);
+                } else {
+                    frictionCoefValue = switchCalculatedCoef(frictionCoef);
+                }
+                if(frictionCoefInstru.length==2){
+                    instru = switchInstrument(frictionCoefInstru[1]);
+                }
+
+                decode_frictionCoef[i] = "BRAKING ACTION Threshold: " + frictionCoefValue[0] + " / " +
+                        "Mid runway: " + frictionCoefValue[1] + " / " +
+                        "Roll out: " + frictionCoefValue[2] + " " +
+                        "Instrument: " + instru;
             }
-            if(frictionCoefInstru.length==2){
-                instru = switchInstrument(frictionCoefInstru[1]);
-            }
-
-
-            Log.d("DECODE H): ", frictionCoefValue[0]+"\t"+frictionCoefValue[1]+"\t"+frictionCoefValue[2]);
-            decode_frictionCoef = "BRAKING ACTION Threshold: " + frictionCoefValue[0] + " / " +
-                    "Mid runway: " + frictionCoefValue[1] + " / " +
-                    "Roll out: " + frictionCoefValue[2] + " " +
-                    "Instrument: " + instru;
         }
-
 
         // J)
         if(code_criticalSnowbanks!=null) {
-            String[] criticalSnowbanks = code_criticalSnowbanks.trim().split("/");
-            String directionDistance = criticalSnowbanks[1];
-            String[] directionAndDistance = {"", ""};
-            directionAndDistance = directionDistanceCriticalSnowbanks(directionDistance);
+            for(i=0 ; i<code_criticalSnowbanks.length ; i++){
+                String[] criticalSnowbanks = code_criticalSnowbanks[i].trim().split("/");
+                String directionDistance = criticalSnowbanks[1];
+                String[] directionAndDistance = {"", ""};
+                directionAndDistance = directionDistanceCriticalSnowbanks(directionDistance);
 
-            decode_criticalSnowbanks = "CRITICAL SNOW BANK " + criticalSnowbanks[0] + "cm / " +
-                    directionAndDistance[0] + "m " + getDirection(directionAndDistance[1]) + " of Runway";
+                decode_criticalSnowbanks[i] = "CRITICAL SNOW BANK " + criticalSnowbanks[0] + "cm / " +
+                        directionAndDistance[0] + "m " + getDirection(directionAndDistance[1]) + " of Runway";
+            }
         }
-
 
         // K)
         if(code_lightsObscured!=null) {
-            String[] lightsObscured = code_lightsObscured.trim().split(" ");
-            decode_lightsObscured = "Lights obscured: " + lightsObscured[0] + " " +
-                    getDirection(lightsObscured[1]) + " of RUNWAY";
+            for(i=0 ; i<code_lightsObscured.length ; i++){
+                String[] lightsObscured = code_lightsObscured[i].trim().split(" ");
+                decode_lightsObscured[i] = "Lights obscured: " + lightsObscured[0] + " " +
+                        getDirection(lightsObscured[1]) + " of RUNWAY";
+            }
         }
-
 
         // L)
         if(code_furtherClearance!=null) {
-            String[] furtherClearance = code_furtherClearance.trim().split("/");
-            decode_furtherClearance = "FURTHER CLEARANCE " + furtherClearance[0] + "m / " +
-                    furtherClearance[1] + "m";
+            for(i=0 ; i<code_furtherClearance.length ; i++){
+                String[] furtherClearance = code_furtherClearance[i].trim().split("/");
+                decode_furtherClearance[i] = "FURTHER CLEARANCE " + furtherClearance[0] + "m / " +
+                        furtherClearance[1] + "m";
+            }
         }
-
 
         // M)
         if(code_anticipatedTimecompletion!=null) {
-            decode_anticipatedTimecompletion = "Anticipated time of completion " + code_anticipatedTimecompletion + " UTC";
+            for(i=0 ; i<code_anticipatedTimecompletion.length ; i++){
+                decode_anticipatedTimecompletion[i] = "Anticipated time of completion " + code_anticipatedTimecompletion[i] + " UTC";
+            }
         }
-
 
         // N)
         if(code_taxiwaysState!=null) {
-            decode_taxiwaysState = "Taxiway " + code_taxiwaysState.substring(0, 1) + " : " +
-                    switchConditions(code_taxiwaysState.substring(1));
+            for(i=0 ; i<code_taxiwaysState.length ; i++){
+                decode_taxiwaysState[i] = "Taxiway " + code_taxiwaysState[i].substring(0, 1) + " : " +
+                        switchConditions(code_taxiwaysState[i].substring(1));
+            }
         }
-
 
         // P)
         if(code_snowBanks!=null) {
-            decode_snowBanks = "SNOW BANKS : YES SPACE" + code_snowBanks.substring(3) + "m";
+            for(i=0 ; i<code_snowBanks.length ; i++){
+                decode_snowBanks[i] = "SNOW BANKS : YES SPACE" + code_snowBanks[i].substring(3) + "m";
+            }
         }
-
 
         // R)
         Log.d("R) apron",code_parking);
@@ -455,6 +481,7 @@ public class CodeInfo {
     }
 
     // GETTERS SETTERS
+
     public AirportInfo getAirport() {
         return airport;
     }
@@ -479,99 +506,99 @@ public class CodeInfo {
         this.code_date = code_date;
     }
 
-    public String getCode_idRunway() {
+    public String[] getCode_idRunway() {
         return code_idRunway;
     }
 
-    public void setCode_idRunway(String code_idRunway) {
+    public void setCode_idRunway(String[] code_idRunway) {
         this.code_idRunway = code_idRunway;
     }
 
-    public String getCode_clearedRunwayLength() {
+    public String[] getCode_clearedRunwayLength() {
         return code_clearedRunwayLength;
     }
 
-    public void setCode_clearedRunwayLength(String code_clearedRunwayLength) {
+    public void setCode_clearedRunwayLength(String[] code_clearedRunwayLength) {
         this.code_clearedRunwayLength = code_clearedRunwayLength;
     }
 
-    public String getCode_clearedRunwayWidth() {
+    public String[] getCode_clearedRunwayWidth() {
         return code_clearedRunwayWidth;
     }
 
-    public void setCode_clearedRunwayWidth(String code_clearedRunwayWidth) {
+    public void setCode_clearedRunwayWidth(String[] code_clearedRunwayWidth) {
         this.code_clearedRunwayWidth = code_clearedRunwayWidth;
     }
 
-    public String getCode_conditionsRunway() {
+    public String[] getCode_conditionsRunway() {
         return code_conditionsRunway;
     }
 
-    public void setCode_conditionsRunway(String code_conditionsRunway) {
+    public void setCode_conditionsRunway(String[] code_conditionsRunway) {
         this.code_conditionsRunway = code_conditionsRunway;
     }
 
-    public String getCode_thickness() {
+    public String[] getCode_thickness() {
         return code_thickness;
     }
 
-    public void setCode_thickness(String code_thickness) {
+    public void setCode_thickness(String[] code_thickness) {
         this.code_thickness = code_thickness;
     }
 
-    public String getCode_frictionCoef() {
+    public String[] getCode_frictionCoef() {
         return code_frictionCoef;
     }
 
-    public void setCode_frictionCoef(String code_frictionCoef) {
+    public void setCode_frictionCoef(String[] code_frictionCoef) {
         this.code_frictionCoef = code_frictionCoef;
     }
 
-    public String getCode_criticalSnowbanks() {
+    public String[] getCode_criticalSnowbanks() {
         return code_criticalSnowbanks;
     }
 
-    public void setCode_criticalSnowbanks(String code_criticalSnowbanks) {
+    public void setCode_criticalSnowbanks(String[] code_criticalSnowbanks) {
         this.code_criticalSnowbanks = code_criticalSnowbanks;
     }
 
-    public String getCode_lightsObscured() {
+    public String[] getCode_lightsObscured() {
         return code_lightsObscured;
     }
 
-    public void setCode_lightsObscured(String code_lightsObscured) {
+    public void setCode_lightsObscured(String[] code_lightsObscured) {
         this.code_lightsObscured = code_lightsObscured;
     }
 
-    public String getCode_furtherClearance() {
+    public String[] getCode_furtherClearance() {
         return code_furtherClearance;
     }
 
-    public void setCode_furtherClearance(String code_furtherClearance) {
+    public void setCode_furtherClearance(String[] code_furtherClearance) {
         this.code_furtherClearance = code_furtherClearance;
     }
 
-    public String getCode_anticipatedTimecompletion() {
+    public String[] getCode_anticipatedTimecompletion() {
         return code_anticipatedTimecompletion;
     }
 
-    public void setCode_anticipatedTimecompletion(String code_anticipatedTimecompletion) {
+    public void setCode_anticipatedTimecompletion(String[] code_anticipatedTimecompletion) {
         this.code_anticipatedTimecompletion = code_anticipatedTimecompletion;
     }
 
-    public String getCode_taxiwaysState() {
+    public String[] getCode_taxiwaysState() {
         return code_taxiwaysState;
     }
 
-    public void setCode_taxiwaysState(String code_taxiwaysState) {
+    public void setCode_taxiwaysState(String[] code_taxiwaysState) {
         this.code_taxiwaysState = code_taxiwaysState;
     }
 
-    public String getCode_snowBanks() {
+    public String[] getCode_snowBanks() {
         return code_snowBanks;
     }
 
-    public void setCode_snowBanks(String code_snowBanks) {
+    public void setCode_snowBanks(String[] code_snowBanks) {
         this.code_snowBanks = code_snowBanks;
     }
 
@@ -615,99 +642,99 @@ public class CodeInfo {
         this.decode_date = decode_date;
     }
 
-    public String getDecode_idRunway() {
+    public String[] getDecode_idRunway() {
         return decode_idRunway;
     }
 
-    public void setDecode_idRunway(String decode_idRunway) {
+    public void setDecode_idRunway(String[] decode_idRunway) {
         this.decode_idRunway = decode_idRunway;
     }
 
-    public String getDecode_clearedRunwayLength() {
+    public String[] getDecode_clearedRunwayLength() {
         return decode_clearedRunwayLength;
     }
 
-    public void setDecode_clearedRunwayLength(String decode_clearedRunwayLength) {
+    public void setDecode_clearedRunwayLength(String[] decode_clearedRunwayLength) {
         this.decode_clearedRunwayLength = decode_clearedRunwayLength;
     }
 
-    public String getDecode_clearedRunwayWidth() {
+    public String[] getDecode_clearedRunwayWidth() {
         return decode_clearedRunwayWidth;
     }
 
-    public void setDecode_clearedRunwayWidth(String decode_clearedRunwayWidth) {
+    public void setDecode_clearedRunwayWidth(String[] decode_clearedRunwayWidth) {
         this.decode_clearedRunwayWidth = decode_clearedRunwayWidth;
     }
 
-    public String getDecode_conditionsRunway() {
+    public String[] getDecode_conditionsRunway() {
         return decode_conditionsRunway;
     }
 
-    public void setDecode_conditionsRunway(String decode_conditionsRunway) {
+    public void setDecode_conditionsRunway(String[] decode_conditionsRunway) {
         this.decode_conditionsRunway = decode_conditionsRunway;
     }
 
-    public String getDecode_thickness() {
+    public String[] getDecode_thickness() {
         return decode_thickness;
     }
 
-    public void setDecode_thickness(String decode_thickness) {
+    public void setDecode_thickness(String[] decode_thickness) {
         this.decode_thickness = decode_thickness;
     }
 
-    public String getDecode_frictionCoef() {
+    public String[] getDecode_frictionCoef() {
         return decode_frictionCoef;
     }
 
-    public void setDecode_frictionCoef(String decode_frictionCoef) {
+    public void setDecode_frictionCoef(String[] decode_frictionCoef) {
         this.decode_frictionCoef = decode_frictionCoef;
     }
 
-    public String getDecode_criticalSnowbanks() {
+    public String[] getDecode_criticalSnowbanks() {
         return decode_criticalSnowbanks;
     }
 
-    public void setDecode_criticalSnowbanks(String decode_criticalSnowbanks) {
+    public void setDecode_criticalSnowbanks(String[] decode_criticalSnowbanks) {
         this.decode_criticalSnowbanks = decode_criticalSnowbanks;
     }
 
-    public String getDecode_lightsObscured() {
+    public String[] getDecode_lightsObscured() {
         return decode_lightsObscured;
     }
 
-    public void setDecode_lightsObscured(String decode_lightsObscured) {
+    public void setDecode_lightsObscured(String[] decode_lightsObscured) {
         this.decode_lightsObscured = decode_lightsObscured;
     }
 
-    public String getDecode_furtherClearance() {
+    public String[] getDecode_furtherClearance() {
         return decode_furtherClearance;
     }
 
-    public void setDecode_furtherClearance(String decode_furtherClearance) {
+    public void setDecode_furtherClearance(String[] decode_furtherClearance) {
         this.decode_furtherClearance = decode_furtherClearance;
     }
 
-    public String getDecode_anticipatedTimecompletion() {
+    public String[] getDecode_anticipatedTimecompletion() {
         return decode_anticipatedTimecompletion;
     }
 
-    public void setDecode_anticipatedTimecompletion(String decode_anticipatedTimecompletion) {
+    public void setDecode_anticipatedTimecompletion(String[] decode_anticipatedTimecompletion) {
         this.decode_anticipatedTimecompletion = decode_anticipatedTimecompletion;
     }
 
-    public String getDecode_taxiwaysState() {
+    public String[] getDecode_taxiwaysState() {
         return decode_taxiwaysState;
     }
 
-    public void setDecode_taxiwaysState(String decode_taxiwaysState) {
+    public void setDecode_taxiwaysState(String[] decode_taxiwaysState) {
         this.decode_taxiwaysState = decode_taxiwaysState;
     }
 
-    public String getDecode_snowBanks() {
+    public String[] getDecode_snowBanks() {
         return decode_snowBanks;
     }
 
-    public void setDecode_snowBanks(String decode_snowBanks) {
+    public void setDecode_snowBanks(String[] decode_snowBanks) {
         this.decode_snowBanks = decode_snowBanks;
     }
 
