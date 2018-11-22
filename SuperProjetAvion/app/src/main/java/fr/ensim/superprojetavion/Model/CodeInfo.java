@@ -157,10 +157,12 @@ public class CodeInfo {
 
 
         // H)
+        Log.d("code friction", code_frictionCoef);
         if(code_frictionCoef!=null) {
             String[] frictionCoefInstru = code_frictionCoef.split(" ");  // Separates coef and instrument
-            String[] frictionCoef = frictionCoefInstru[0].split("/");    // Separates all coef
+            String[] frictionCoef = frictionCoefInstru[0].trim().split("/");    // Separates all coef
             String[] frictionCoefValue = {"", "", ""};                            // Contains values of coef
+            String instru="";
 
             Log.d("DECODE : ", frictionCoef[0]+"_\t_"+frictionCoef[1]+"_\t_"+frictionCoef[2]+"_");
             if (frictionCoef[0].length() == 1) {
@@ -168,17 +170,22 @@ public class CodeInfo {
             } else {
                 frictionCoefValue = switchCalculatedCoef(frictionCoef);
             }
-            Log.d("DECODE : ", frictionCoefValue[0]+"\t"+frictionCoefValue[1]+"\t"+frictionCoefValue[2]);
+            if(frictionCoefInstru.length==2){
+                instru = switchInstrument(frictionCoefInstru[1]);
+            }
+
+
+            Log.d("DECODE H): ", frictionCoefValue[0]+"\t"+frictionCoefValue[1]+"\t"+frictionCoefValue[2]);
             decode_frictionCoef = "BRAKING ACTION Threshold: " + frictionCoefValue[0] + " / " +
                     "Mid runway: " + frictionCoefValue[1] + " / " +
                     "Roll out: " + frictionCoefValue[2] + " " +
-                    "Instrument: " + switchInstrument(frictionCoefInstru[1]);
+                    "Instrument: " + instru;
         }
 
 
         // J)
         if(code_criticalSnowbanks!=null) {
-            String[] criticalSnowbanks = code_criticalSnowbanks.split("/");
+            String[] criticalSnowbanks = code_criticalSnowbanks.trim().split("/");
             String directionDistance = criticalSnowbanks[1];
             String[] directionAndDistance = {"", ""};
             directionAndDistance = directionDistanceCriticalSnowbanks(directionDistance);
@@ -190,7 +197,7 @@ public class CodeInfo {
 
         // K)
         if(code_lightsObscured!=null) {
-            String[] lightsObscured = code_lightsObscured.split(" ");
+            String[] lightsObscured = code_lightsObscured.trim().split(" ");
             decode_lightsObscured = "Lights obscured: " + lightsObscured[0] + " " +
                     getDirection(lightsObscured[1]) + " of RUNWAY";
         }
@@ -198,7 +205,7 @@ public class CodeInfo {
 
         // L)
         if(code_furtherClearance!=null) {
-            String[] furtherClearance = code_furtherClearance.split("/");
+            String[] furtherClearance = code_furtherClearance.trim().split("/");
             decode_furtherClearance = "FURTHER CLEARANCE " + furtherClearance[0] + "m / " +
                     furtherClearance[1] + "m";
         }
@@ -224,14 +231,16 @@ public class CodeInfo {
 
 
         // R)
-        if(code_parking!=null) {
-            String[] usabilityParking = decode_parking.split(" ");
+        Log.d("R) apron",code_parking);
+        // A REVOIR MAUVAIS RECODAGE
+       if(code_parking!=null) {
+         /*   String[] usabilityParking = decode_parking.split(" ");
             String usability = "";
             if (usabilityParking[1].equals("NO")) {
                 usability = "UNUSABLE";
             }
             decode_parking = "Parking " + usabilityParking[0] + " " + usability;
-        }
+     */   }
 
 
         // S)
