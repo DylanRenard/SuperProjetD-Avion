@@ -70,7 +70,7 @@ public class CodeInfo {
 
     private AirportInfo airport;
 
-    //ATTENTION CHAMPS C à P PEUVENT ETRE MULTIPLE
+    //WARNING ! C à P CAN BE MULTIPLES
     private String code_location;                       // A) aerodrome location indicator
     private String code_date;                           // B) observation date & time
     private String[] code_idRunway;                       // C) runway designator
@@ -258,15 +258,15 @@ public class CodeInfo {
 
         // R)
         Log.d("R) apron",code_parking);
-        // A REVOIR MAUVAIS RECODAGE
+        // A REVOIR
        if(code_parking!=null) {
-         /*   String[] usabilityParking = decode_parking.split(" ");
-            String usability = "";
-            if (usabilityParking[1].equals("NO")) {
-                usability = "UNUSABLE";
-            }
-            decode_parking = "Parking " + usabilityParking[0] + " " + usability;
-     */   }
+           if (code_parking.contains("NO")){
+               decode_parking ="UNUSABLE";
+           }
+           else {
+               decode_parking = code_parking;
+           }
+       }
 
 
         // S)
