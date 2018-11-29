@@ -18,7 +18,7 @@ import fr.ensim.superprojetavion.R;
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private final List<Pair<String, String>> characters = Arrays.asList(
+    private final List<Pair<String, String>> airports =  Arrays.asList(
             Pair.create("ESSA", "Stockholm Arlanda"),
             Pair.create("LFPO", "Paris Orly"),
             Pair.create("LICC", "Catania Fontanarossa"),
@@ -36,14 +36,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Pair<String, String> pair = characters.get(position);
+        Pair<String, String> pair = airports.get(position);
         holder.display(pair);
     }
 
 
     @Override
     public int getItemCount() {
-        return characters.size();
+        return airports.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
