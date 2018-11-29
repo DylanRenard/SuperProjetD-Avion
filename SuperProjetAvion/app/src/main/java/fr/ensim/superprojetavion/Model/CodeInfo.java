@@ -124,7 +124,7 @@ public class CodeInfo {
 
         // C)
         if(code_idRunway!=null) {
-            if (code_idRunway.equals("88")) {
+            if (code_idRunway[0].equals("88")) {
                 decode_idRunway[0] = "ALL RUNWAYS";
             } else {
                 for(i=0 ; i<code_idRunway.length ; i++){
@@ -143,18 +143,23 @@ public class CodeInfo {
         // E)
         if(code_clearedRunwayWidth!=null) {
             for(i=0 ; i<code_clearedRunwayWidth.length ; i++){
-                String axis = "";
-                String[] clearedRunwayWidth = code_clearedRunwayWidth[i].split("");
-                if (clearedRunwayWidth[clearedRunwayWidth.length - 1].equals("L")) {
-                    axis = "LEFT";
-                } else {
-                    axis = "RIGHT";
-                }
+                decode_clearedRunwayWidth[i] = "CLEARED RUNWAY WIDTH ";
 
-                if (clearedRunwayWidth.length == 2) {
-                    decode_clearedRunwayWidth[i] = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + "M " + axis;
-                } else {
-                    decode_clearedRunwayWidth[i] = "CLEARED RUNWAY WIDTH " + clearedRunwayWidth[0] + clearedRunwayWidth[1] + "M " + axis;
+                char[] clearedRunwayWidth = code_clearedRunwayWidth[i].toCharArray();
+                for (int j=0 ; j<clearedRunwayWidth.length-1 ; j++){
+                    decode_clearedRunwayWidth[i] = decode_clearedRunwayWidth[i]+clearedRunwayWidth[j];
+                }
+                char last = clearedRunwayWidth[clearedRunwayWidth.length-1];
+                switch(last){
+                    case 'L':
+                        decode_clearedRunwayWidth[i] = decode_clearedRunwayWidth[i]+"M LEFT";
+                        break;
+                    case 'R':
+                        decode_clearedRunwayWidth[i] = decode_clearedRunwayWidth[i]+"M RIGHT";
+                        break;
+                    default:
+                        decode_clearedRunwayWidth[i] = decode_clearedRunwayWidth[i]+last+"M";
+                        break;
                 }
             }
         }

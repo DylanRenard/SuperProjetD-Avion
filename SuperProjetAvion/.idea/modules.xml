@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SuperProjetAvion.iml" filepath="$PROJECT_DIR$/SuperProjetAvion.iml" />
-      <module fileurl="file://D:\ENSIM\5A\Appli interfaces embarquees\Projet\SprProjet\SuperProjetD-Avion\SuperProjetAvion\SuperProjetAvion.iml" filepath="D:\ENSIM\5A\Appli interfaces embarquees\Projet\SprProjet\SuperProjetD-Avion\SuperProjetAvion\SuperProjetAvion.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\ENSIM\5A\Appli interfaces embarquees\Projet\SprProjet\SuperProjetD-Avion\SuperProjetAvion\app\app.iml" filepath="D:\ENSIM\5A\Appli interfaces embarquees\Projet\SprProjet\SuperProjetD-Avion\SuperProjetAvion\app\app.iml" />
     </modules>
   </component>
 </project>
