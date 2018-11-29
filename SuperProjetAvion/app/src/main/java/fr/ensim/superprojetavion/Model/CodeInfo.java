@@ -247,6 +247,7 @@ public class CodeInfo {
         }
 
         // N)
+        // A REVOIR
         if(code_taxiwaysState!=null) {
             for(i=0 ; i<code_taxiwaysState.length ; i++){
                 decode_taxiwaysState[i] = "Taxiway " + code_taxiwaysState[i].substring(0, 1) + " : " +

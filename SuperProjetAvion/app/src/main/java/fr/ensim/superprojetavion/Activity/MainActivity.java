@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import fr.ensim.superprojetavion.Adapter.MyAdapter;
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.R;
 import fr.ensim.superprojetavion.Service.OaciService;
@@ -36,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 search("enbr".toUpperCase());
             }
         });
+
+        final RecyclerView list =(RecyclerView) findViewById(R.id.list);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(new MyAdapter());
 
     }
 
