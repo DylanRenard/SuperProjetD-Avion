@@ -6,4 +6,58 @@
     android:layout_height="match_parent"
     tools:context="fr.ensim.superprojetavion.Activity.SearchActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="116dp"
+            android:layout_height="104dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:adjustViewBounds="false"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+
+        <TextView
+            android:id="@+id/codeAirport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="CODE"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/nameAirport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Airport name"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/dscription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_margin="25dp"
+            android:text="jhzcqdshddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddjkHQSwjgJ?QSGCKHwjGB?CwvGKGUB?SCguwkjHB?SNQCWXJHN?SWXCJ" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/btn_star"
+        tools:layout_editor_absoluteX="312dp"
+        tools:layout_editor_absoluteY="16dp" />
 </android.support.constraint.ConstraintLayout>
