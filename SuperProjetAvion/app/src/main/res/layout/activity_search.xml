@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/flag"
             android:layout_width="116dp"
             android:layout_height="104dp"
             android:layout_gravity="center"
@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:text="CODE"
             android:textSize="28sp" />
 
         <TextView
@@ -41,20 +40,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Airport name"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/dscription"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:layout_margin="25dp"
-            android:text="jhzcqdshddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddjkHQSwjgJ?QSGCKHwjGB?CwvGKGUB?SCguwkjHB?SNQCWXJHN?SWXCJ" />
+            android:layout_marginTop="40dp" />
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/favorisIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/btn_star"

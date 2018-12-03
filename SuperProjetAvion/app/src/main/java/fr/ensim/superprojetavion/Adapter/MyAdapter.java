@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.R;
 
 /**
@@ -27,6 +29,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     );
 
+    private ArrayList<AirportInfo> airportInfoList;
+
+    public MyAdapter(ArrayList<AirportInfo> favorisList){
+        airportInfoList = favorisList;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -36,8 +44,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Pair<String, String> pair = airports.get(position);
-        holder.display(pair);
+        AirportInfo airport = airportInfoList.get(position);
+        holder.display(airport);
     }
 
 
@@ -50,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private final TextView codeAirport;
         private final TextView nameAirport;
 
-        private Pair<String, String> currentPair;
+        private AirportInfo currentAirport;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
@@ -60,18 +68,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new AlertDialog.Builder(itemView.getContext())
-                            .setTitle(currentPair.first)
-                            .setMessage(currentPair.second)
-                            .show();
+
                 }
             });
         }
 
-        public void display(Pair<String, String> pair) {
-            currentPair = pair;
-            codeAirport.setText(pair.first);
-            nameAirport.setText(pair.second);
+        public void display(AirportInfo airport) {
+            currentAirport = airport;
+            codeAirport.setText(airport.getOaciCode());
+            nameAirport.setText(airport.getAirportName());
         }
     }
 }

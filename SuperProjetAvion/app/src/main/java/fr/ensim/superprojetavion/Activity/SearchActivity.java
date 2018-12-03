@@ -1,9 +1,19 @@
 package fr.ensim.superprojetavion.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -11,6 +21,15 @@ import com.android.volley.VolleyError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.Model.CodeInfo;
@@ -22,15 +41,48 @@ public class SearchActivity extends AppCompatActivity {
     AirportInfo result;
     CodeInfo snowtam;
 
+    ArrayList<AirportInfo> favorisList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        importFavorisList();
+
         Intent i = getIntent();
         result = i.getParcelableExtra("result");
+        result.setfavoris(false);
 
-        Log.d("test parcelable : ", result.toString() );
+        for (AirportInfo fav : favorisList){
+            if(fav.getOaciCode().equals(result.getOaciCode())) result.setfavoris(true);
+        }
+
+        ImageView flag = findViewById(R.id.flag);
+        new DownloadImageTask(flag).execute(result.getFlag());
+
+        TextView oaciCode = findViewById(R.id.codeAirport);
+        oaciCode.setText(result.getOaciCode());
+
+        TextView airportName = findViewById(R.id.nameAirport);
+        airportName.setText(result.getAirportName());
+
+        TextView description = findViewById(R.id.description);
+        description.setText("Latitude : " + result.getLatitude() + "\nLongitude : " + result.getLongitude());
+
+        ImageButton favIcon = findViewById(R.id.favorisIcon);
+        favIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(result.isfavoris()){
+                    result.setfavoris(false);
+                }
+                else result.setfavoris(true);
+            }
+        });
+
+        Button toSnowtam;
+        
 
         Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
             @Override
@@ -62,5 +114,70 @@ public class SearchActivity extends AppCompatActivity {
         };
 
         SnowtamService.searchSnowtam(result.getOaciCode(),responseListener,errorListener,SearchActivity.this);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        if(result.isfavoris()) favorisList.add(result);
+
+        saveFavorisList();
+    }
+
+    private void saveFavorisList() {
+        FileOutputStream outputStream;
+        ObjectOutputStream oos;
+        try {
+            outputStream = openFileOutput("favoris.txt", Context.MODE_PRIVATE);
+            oos = new ObjectOutputStream(outputStream);
+            oos.writeObject(favorisList);
+
+            oos.flush();
+            oos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void importFavorisList() {
+        try {
+            FileInputStream fis = openFileInput("favoris.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            favorisList = (ArrayList<AirportInfo>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            favorisList = new ArrayList<AirportInfo>();
+        } catch (IOException e) {
+            e.printStackTrace();
+            favorisList = new ArrayList<AirportInfo>();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            favorisList = new ArrayList<AirportInfo>();
+        }
+    }
+
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

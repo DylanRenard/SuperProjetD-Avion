@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
@@ -32,18 +33,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView t = findViewById(R.id.test);
-        t.setOnClickListener(new View.OnClickListener() {
+        final SearchView search = findViewById(R.id.searchView);
+        search.setIconified(false);
+        search.setQueryHint(getString(R.string.oaci));
+        search.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
-            public void onClick(View view) {
-                search("enbr".toUpperCase());
+            public boolean onClose() {
+                return true;
             }
         });
 
-        final RecyclerView list =(RecyclerView) findViewById(R.id.list);
-        list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new MyAdapter());
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                search(s.toUpperCase());
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return true;
+            }
+        });
+
+        if(favorisList!=null){
+            final RecyclerView list =(RecyclerView) findViewById(R.id.list);
+            list.setLayoutManager(new LinearLayoutManager(this));
+            list.setAdapter(new MyAdapter(favorisList));
+        }
     }
 
     @Override

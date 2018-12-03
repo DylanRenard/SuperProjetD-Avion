@@ -28,7 +28,7 @@ public class OaciService {
 
             result.setFlag(flag.children().first().attributes().asList().get(0).getValue());
             result.setLocation(location.text());
-            result.setAirportName(name.text());
+            result.setAirportName(name.text().substring(0,name.text().length()-82));
             result.setLatitude(Double.parseDouble(latitude.val()));
             result.setLongitude(Double.parseDouble(longitude.val()));
             result.setPhoneNumber(phone.val());
