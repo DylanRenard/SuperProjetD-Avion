@@ -107,8 +107,6 @@ public class SearchActivity extends AppCompatActivity {
 
                                 if(info.getString("id").contains("SW")){
                                     snowtamInfo = info.getString("all");
-
-                                    Log.w("Response SearchActivity", ""+snowtamInfo);
                                 }
                             }
                         } catch (JSONException e) {
@@ -164,7 +162,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onBackPressed(){
         super.onBackPressed();
 
-        onStop();
+        finish();
     }
 
     private void saveFavorisList() {

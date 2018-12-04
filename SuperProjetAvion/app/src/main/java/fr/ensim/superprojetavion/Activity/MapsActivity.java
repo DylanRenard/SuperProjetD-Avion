@@ -1,7 +1,11 @@
 package fr.ensim.superprojetavion.Activity;
 
+import android.content.Intent;
+import android.media.Image;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -10,16 +14,32 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.R;
+import fr.ensim.superprojetavion.Service.DownloadImageTask;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private AirportInfo airportInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Intent i = getIntent();
+        airportInfo = i.getParcelableExtra("airport");
+
+        TextView oaci = findViewById(R.id.oaci);
+        oaci.setText(airportInfo.getOaciCode());
+
+        TextView name = findViewById(R.id.name);
+        name.setText(airportInfo.getAirportName());
+
+        ImageView flag = findViewById(R.id.flag);
+        new DownloadImageTask(flag).execute(airportInfo.getFlag());
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -42,12 +62,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        double lat = 48.7252998;
-        double longitude =  2.3594401;
+        double lat = airportInfo.getLatitude();
+        double longitude =  airportInfo.getLongitude();
         // Add a marker in Sydney and move the camera
         LatLng airport = new LatLng( lat , longitude);
         float zoomLevel = (float) 14.0;
-        mMap.addMarker(new MarkerOptions().position(airport).title("Airport"));
+        mMap.addMarker(new MarkerOptions().position(airport).title(airportInfo.getAirportName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(airport, zoomLevel));
     }
 }

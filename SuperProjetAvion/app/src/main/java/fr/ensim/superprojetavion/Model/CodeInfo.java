@@ -348,7 +348,7 @@ public class CodeInfo implements Parcelable{
         }
 
         // R)
-        Log.d("R) apron",code_parking);
+        Log.d("R) apron",""+code_parking);
         // A REVOIR
         if(code_parking!=null) {
             if (code_parking.contains("NO")){
