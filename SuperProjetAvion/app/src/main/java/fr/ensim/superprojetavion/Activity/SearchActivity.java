@@ -117,6 +117,10 @@ public class SearchActivity extends AppCompatActivity {
                         }
 
                         if(snowtamInfo!=null) snowtam = new CodeInfo(snowtamInfo,result);
+
+                        Intent intent = new Intent(SearchActivity.this, CodeActivity.class);
+                        intent.putExtra("snowtam",snowtam);
+                        startActivity(intent);
                     }
                 };
 

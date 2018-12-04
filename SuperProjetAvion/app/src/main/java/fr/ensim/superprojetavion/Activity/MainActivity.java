@@ -57,24 +57,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        Log.w("FAVORIS" , ""+favorisList);
-        if(favorisList!=null){
-            final RecyclerView list =(RecyclerView) findViewById(R.id.list);
-            list.setLayoutManager(new LinearLayoutManager(this));
-            list.setAdapter(new MyAdapter(favorisList));
-        }
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         importFavorisList();
-        Log.w("FAVORIS resume" , ""+favorisList);
         if(favorisList!=null){
             final RecyclerView list =(RecyclerView) findViewById(R.id.list);
             list.setLayoutManager(new LinearLayoutManager(this));
-            list.setAdapter(new MyAdapter(favorisList));
+            list.setAdapter(new MyAdapter(favorisList, MainActivity.this));
         }
     }
 
