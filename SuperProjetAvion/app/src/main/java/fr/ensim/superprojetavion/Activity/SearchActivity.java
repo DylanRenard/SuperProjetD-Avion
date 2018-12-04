@@ -1,14 +1,11 @@
 package fr.ensim.superprojetavion.Activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +24,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -35,6 +31,7 @@ import java.util.ArrayList;
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.Model.CodeInfo;
 import fr.ensim.superprojetavion.R;
+import fr.ensim.superprojetavion.Service.DownloadImageTask;
 import fr.ensim.superprojetavion.Service.SnowtamService;
 
 public class SearchActivity extends AppCompatActivity {
@@ -110,17 +107,26 @@ public class SearchActivity extends AppCompatActivity {
 
                                 if(info.getString("id").contains("SW")){
                                     snowtamInfo = info.getString("all");
+
+                                    Log.w("Response SearchActivity", ""+snowtamInfo);
                                 }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        if(snowtamInfo!=null) snowtam = new CodeInfo(snowtamInfo,result);
+                        if(snowtamInfo!=null) {
+                            snowtam = new CodeInfo(snowtamInfo,result);
+                            Intent intent = new Intent(SearchActivity.this, CodeActivity.class);
+                            intent.putExtra("snowtam",snowtam);
+                            intent.putExtra("airport",(Parcelable)result);
+                            startActivity(intent);
+                        }
+                        else {
+                            //Pas de snowtam
+                            //Afficher un truc?
+                        }
 
-                        Intent intent = new Intent(SearchActivity.this, CodeActivity.class);
-                        intent.putExtra("snowtam",snowtam);
-                        startActivity(intent);
                     }
                 };
 
@@ -190,30 +196,6 @@ public class SearchActivity extends AppCompatActivity {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             favorisList = new ArrayList<AirportInfo>();
-        }
-    }
-
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap bmp = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                bmp = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return bmp;
-        }
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
         }
     }
 }

@@ -31,31 +31,20 @@ public class CodeInfo implements Parcelable{
 
         while(info.contains("C) ")){
             if(info.contains("C) ")) this.code_idRunway.add(i, info.substring(info.indexOf("C) ") + 3, info.indexOf(')', info.indexOf("C) ") + 2) - 1));
-            else this.code_idRunway = null;
             if(info.contains("D) ")) this.code_clearedRunwayLength.add(i, info.substring(info.indexOf("D) ") + 3, info.indexOf(')', info.indexOf("D) ") + 2) - 1));
-            else this.code_clearedRunwayLength = null;
             if(info.contains("E) ")) this.code_clearedRunwayWidth.add(i, info.substring(info.indexOf("E) ") + 3, info.indexOf(')', info.indexOf("E) ") + 2) - 1));
-            else this.code_clearedRunwayWidth = null;
             if(info.contains("F) ")) this.code_conditionsRunway.add(i, info.substring(info.indexOf("F) ") + 3, info.indexOf(')', info.indexOf("F) ") + 2) - 1));
-            else this.code_conditionsRunway = null;
             if(info.contains("G) ")) this.code_thickness.add(i, info.substring(info.indexOf("G) ") + 3, info.indexOf(')', info.indexOf("G) ") + 2) - 1));
-            else this.code_thickness = null;
             if(info.contains("H) ")) this.code_frictionCoef.add(i, info.substring(info.indexOf("H) ") + 3, info.indexOf(')', info.indexOf("H) ") + 2) - 1));
-            else this.code_frictionCoef = null;
             if(info.contains("J) ")) this.code_criticalSnowbanks.add(i, info.substring(info.indexOf("J) ") + 3, info.indexOf(')', info.indexOf("J) ") + 2) - 1));
-            else this.code_criticalSnowbanks = null;
             if(info.contains("K) ")) this.code_lightsObscured.add(i, info.substring(info.indexOf("K) ") + 3, info.indexOf(')', info.indexOf("K) ") + 2) - 1));
-            else this.code_lightsObscured = null;
             if(info.contains("L) ")) this.code_furtherClearance.add(i, info.substring(info.indexOf("L) ") + 3, info.indexOf(')', info.indexOf("L) ") + 2) - 1));
-            else this.code_furtherClearance = null;
             if(info.contains("M) ")) this.code_anticipatedTimecompletion.add(i, info.substring(info.indexOf("M) ") + 3, info.indexOf(')', info.indexOf("M) ") + 2) - 1));
-            else this.code_anticipatedTimecompletion = null;
             if(info.contains("N) ")) this.code_taxiwaysState.add(i, info.substring(info.indexOf("N) ") + 3, info.indexOf(')', info.indexOf("N) ") + 2) - 1));
-            else this.code_taxiwaysState = null;
             if(info.contains("P) ")) this.code_snowBanks.add(i, info.substring(info.indexOf("P) ") + 3, info.indexOf(')', info.indexOf("P) ") + 2) - 1));
-            else this.code_snowBanks = null;
 
-            info = info.substring(info.indexOf("C)",info.indexOf("C)"+1)));
+            if(info.indexOf("C)",info.indexOf("C)")+1)!=-1) info = info.substring(info.indexOf("C)",info.indexOf("C)")+1));
+            else break;
             i++;
         }
 
@@ -66,9 +55,7 @@ public class CodeInfo implements Parcelable{
         if(info.contains("T) ")) this.code_comment = info.substring(info.indexOf("T) ")+3,info.indexOf(')',info.indexOf("T) ")+2)-1);
         else this.code_comment = null;
 
-        Log.d("TEST SNOWTAM : ", this.code_location+"\n"+this.code_date+"\n"+this.code_idRunway+this.code_clearedRunwayLength);
         this.onDecode();
-        Log.d("TEST SNOWTAM DECODE : ", this.decode_location+"\n"+this.decode_date+"\n"+this.decode_idRunway+this.decode_clearedRunwayLength);
     }
 
     private AirportInfo airport;
@@ -149,6 +136,52 @@ public class CodeInfo implements Parcelable{
         decode_comment = in.readString();
     }
 
+    public String toString(boolean code){
+        String s;
+        if(code) {
+            s = "A) " + code_location + "\nB) " + code_date + "\n" ;
+            for (int i=0 ; i<code_idRunway.size() ; i++){
+                s = s.concat("C) " + code_idRunway.get(i) + "\n");
+                if(code_clearedRunwayLength.size()!=0) s = s.concat("D) " + code_clearedRunwayLength.get(i) + "\n");
+                if(code_clearedRunwayWidth.size()!=0) s = s.concat("E) " + code_clearedRunwayWidth.get(i) + "\n");
+                if(code_conditionsRunway.size()!=0) s = s.concat("F) " + code_conditionsRunway.get(i) + "\n");
+                if(code_thickness.size()!=0) s = s.concat("G) " + code_thickness.get(i) + "\n");
+                if(code_frictionCoef.size()!=0) s = s.concat("H) " + code_frictionCoef.get(i) + "\n");
+                if(code_criticalSnowbanks.size()!=0) s = s.concat("J) " + code_criticalSnowbanks.get(i) + "\n");
+                if(code_lightsObscured.size()!=0) s = s.concat("K) " + code_lightsObscured.get(i) + "\n");
+                if(code_furtherClearance.size()!=0) s = s.concat("L) " + code_furtherClearance.get(i) + "\n");
+                if(code_anticipatedTimecompletion.size()!=0) s = s.concat("M) " + code_anticipatedTimecompletion.get(i) + "\n");
+                if(code_taxiwaysState.size()!=0) s = s.concat("N) " + code_taxiwaysState.get(i) + "\n");
+                if(code_snowBanks.size()!=0) s = s.concat("P) " + code_snowBanks.get(i) + "\n");
+            }
+            if(code_parking!=null) s = s.concat("R) " + code_parking + "\n");
+            if(code_nextObservation!=null) s = s.concat("S) " + code_nextObservation + "\n");
+            if(code_comment!=null) s = s.concat("T) " + code_comment + "\n");
+        }
+        else {
+            s = "A) " + decode_location + "\nB) " + decode_date + "\n" ;
+            for (int i=0 ; i<decode_idRunway.size() ; i++){
+                s = s.concat("C) " + decode_idRunway.get(i) + "\n");
+                if(decode_clearedRunwayLength.size()!=0) s = s.concat("D) " + decode_clearedRunwayLength.get(i) + "\n");
+                if(decode_clearedRunwayWidth.size()!=0) s = s.concat("E) " + decode_clearedRunwayWidth.get(i) + "\n");
+                if(decode_conditionsRunway.size()!=0) s = s.concat("F) " + decode_conditionsRunway.get(i) + "\n");
+                if(decode_thickness.size()!=0) s = s.concat("G) " + decode_thickness.get(i) + "\n");
+                if(decode_frictionCoef.size()!=0) s = s.concat("H) " + decode_frictionCoef.get(i) + "\n");
+                if(decode_criticalSnowbanks.size()!=0) s = s.concat("J) " + decode_criticalSnowbanks.get(i) + "\n");
+                if(decode_lightsObscured.size()!=0) s = s.concat("K) " + decode_lightsObscured.get(i) + "\n");
+                if(decode_furtherClearance.size()!=0) s = s.concat("L) " + decode_furtherClearance.get(i) + "\n");
+                if(decode_anticipatedTimecompletion.size()!=0) s = s.concat("M) " + decode_anticipatedTimecompletion.get(i) + "\n");
+                if(decode_taxiwaysState.size()!=0) s = s.concat("N) " + decode_taxiwaysState.get(i) + "\n");
+                if(decode_snowBanks.size()!=0) s = s.concat("P) " + decode_snowBanks.get(i) + "\n");
+            }
+            if(decode_parking!=null) s = s.concat("R) " + decode_parking + "\n");
+            if(decode_nextObservation!=null) s = s.concat("S) " + decode_nextObservation + "\n");
+            if(decode_comment!=null) s = s.concat("T) " + decode_comment + "\n");
+        }
+
+        return s;
+    }
+
     public static final Creator<CodeInfo> CREATOR = new Creator<CodeInfo>() {
         @Override
         public CodeInfo createFromParcel(Parcel in) {
@@ -181,7 +214,7 @@ public class CodeInfo implements Parcelable{
                 decode_idRunway.set(0, "ALL RUNWAYS");
             } else {
                 for(i=0 ; i< code_idRunway.size(); i++){
-                    decode_idRunway.set(i, "RUNWAY " + code_idRunway.get(i));
+                    decode_idRunway.add(i, "RUNWAY " + code_idRunway.get(i));
                 }
             }
         }
@@ -189,29 +222,29 @@ public class CodeInfo implements Parcelable{
         // D)
         if (code_clearedRunwayLength!=null) {
             for(i=0 ; i< code_clearedRunwayLength.size(); i++){
-                decode_clearedRunwayLength.set(i, " CLEARED RUNWAY LENGTH " + code_clearedRunwayLength.get(i) + "M");
+                decode_clearedRunwayLength.add(i, " CLEARED RUNWAY LENGTH " + code_clearedRunwayLength.get(i) + "M");
             }
         }
 
         // E)
         if(code_clearedRunwayWidth!=null) {
             for(i=0 ; i< code_clearedRunwayWidth.size(); i++){
-                decode_clearedRunwayWidth.set(i, "CLEARED RUNWAY WIDTH ");
+                decode_clearedRunwayWidth.add(i, "CLEARED RUNWAY WIDTH ");
 
                 char[] clearedRunwayWidth = code_clearedRunwayWidth.get(i).toCharArray();
                 for (int j=0 ; j<clearedRunwayWidth.length-1 ; j++){
-                    decode_clearedRunwayWidth.set(i, decode_clearedRunwayWidth.get(i) + clearedRunwayWidth[j]);
+                    decode_clearedRunwayWidth.add(i, decode_clearedRunwayWidth.get(i) + clearedRunwayWidth[j]);
                 }
                 char last = clearedRunwayWidth[clearedRunwayWidth.length-1];
                 switch(last){
                     case 'L':
-                        decode_clearedRunwayWidth.set(i, decode_clearedRunwayWidth.get(i) + "M LEFT");
+                        decode_clearedRunwayWidth.add(i, decode_clearedRunwayWidth.get(i) + "M LEFT");
                         break;
                     case 'R':
-                        decode_clearedRunwayWidth.set(i, decode_clearedRunwayWidth.get(i) + "M RIGHT");
+                        decode_clearedRunwayWidth.add(i, decode_clearedRunwayWidth.get(i) + "M RIGHT");
                         break;
                     default:
-                        decode_clearedRunwayWidth.set(i, decode_clearedRunwayWidth.get(i) + last + "M");
+                        decode_clearedRunwayWidth.add(i, decode_clearedRunwayWidth.get(i) + last + "M");
                         break;
                 }
             }
@@ -221,7 +254,7 @@ public class CodeInfo implements Parcelable{
         if (code_conditionsRunway!=null) {
             for(i=0 ; i< code_conditionsRunway.size(); i++){
                 String[] conditionsRunway = code_conditionsRunway.get(i).split("/");
-                decode_conditionsRunway.set(i, "Threshold: " + switchConditions(conditionsRunway[0]) + " / "
+                decode_conditionsRunway.add(i, "Threshold: " + switchConditions(conditionsRunway[0]) + " / "
                         + "Mid runway: " + switchConditions(conditionsRunway[1]) + " / "
                         + "Roll out: " + switchConditions(conditionsRunway[2]));
             }
@@ -231,7 +264,7 @@ public class CodeInfo implements Parcelable{
         if (code_thickness!=null) {
             for(i=0 ; i< code_thickness.size(); i++){
                 String[] thickness = code_thickness.get(i).split("/");
-                decode_thickness.set(i, "MEAN DEPTH Threshold: " + thickness[0] + "mm / "
+                decode_thickness.add(i, "MEAN DEPTH Threshold: " + thickness[0] + "mm / "
                         + "Mid runway: " + thickness[1] + "mm / "
                         + "Roll out: " + thickness[2] + "mm");
             }
@@ -254,7 +287,7 @@ public class CodeInfo implements Parcelable{
                     instru = switchInstrument(frictionCoefInstru[1]);
                 }
 
-                decode_frictionCoef.set(i, "BRAKING ACTION Threshold: " + frictionCoefValue[0] + " / " +
+                decode_frictionCoef.add(i, "BRAKING ACTION Threshold: " + frictionCoefValue[0] + " / " +
                         "Mid runway: " + frictionCoefValue[1] + " / " +
                         "Roll out: " + frictionCoefValue[2] + " " +
                         "Instrument: " + instru);
@@ -269,7 +302,7 @@ public class CodeInfo implements Parcelable{
                 String[] directionAndDistance = {"", ""};
                 directionAndDistance = directionDistanceCriticalSnowbanks(directionDistance);
 
-                decode_criticalSnowbanks.set(i, "CRITICAL SNOW BANK " + criticalSnowbanks[0] + "cm / " +
+                decode_criticalSnowbanks.add(i, "CRITICAL SNOW BANK " + criticalSnowbanks[0] + "cm / " +
                         directionAndDistance[0] + "m " + getDirection(directionAndDistance[1]) + " of Runway");
             }
         }
@@ -278,7 +311,7 @@ public class CodeInfo implements Parcelable{
         if(code_lightsObscured!=null) {
             for(i=0 ; i< code_lightsObscured.size(); i++){
                 String[] lightsObscured = code_lightsObscured.get(i).trim().split(" ");
-                decode_lightsObscured.set(i, "Lights obscured: " + lightsObscured[0] + " " +
+                decode_lightsObscured.add(i, "Lights obscured: " + lightsObscured[0] + " " +
                         getDirection(lightsObscured[1]) + " of RUNWAY");
             }
         }
@@ -287,7 +320,7 @@ public class CodeInfo implements Parcelable{
         if(code_furtherClearance!=null) {
             for(i=0 ; i< code_furtherClearance.size(); i++){
                 String[] furtherClearance = code_furtherClearance.get(i).trim().split("/");
-                decode_furtherClearance.set(i, "FURTHER CLEARANCE " + furtherClearance[0] + "m / " +
+                decode_furtherClearance.add(i, "FURTHER CLEARANCE " + furtherClearance[0] + "m / " +
                         furtherClearance[1] + "m");
             }
         }
@@ -295,14 +328,14 @@ public class CodeInfo implements Parcelable{
         // M)
         if(code_anticipatedTimecompletion!=null) {
             for(i=0 ; i< code_anticipatedTimecompletion.size(); i++){
-                decode_anticipatedTimecompletion.set(i, "Anticipated time of completion " + code_anticipatedTimecompletion.get(i) + " UTC");
+                decode_anticipatedTimecompletion.add(i, "Anticipated time of completion " + code_anticipatedTimecompletion.get(i) + " UTC");
             }
         }
 
         // N)
         if(code_taxiwaysState!=null) {
             for(i=0 ; i< code_taxiwaysState.size(); i++){
-                decode_taxiwaysState.set(i, "Taxiway " + code_taxiwaysState.get(i).substring(0, 1) + " : " +
+                decode_taxiwaysState.add(i, "Taxiway " + code_taxiwaysState.get(i).substring(0, 1) + " : " +
                         switchConditions(code_taxiwaysState.get(i).substring(1)));
             }
         }
@@ -310,7 +343,7 @@ public class CodeInfo implements Parcelable{
         // P)
         if(code_snowBanks!=null) {
             for(i=0 ; i< code_snowBanks.size(); i++){
-                decode_snowBanks.set(i, "SNOW BANKS : YES SPACE" + code_snowBanks.get(i).substring(3) + "m");
+                decode_snowBanks.add(i, "SNOW BANKS : YES SPACE" + code_snowBanks.get(i).substring(3) + "m");
             }
         }
 

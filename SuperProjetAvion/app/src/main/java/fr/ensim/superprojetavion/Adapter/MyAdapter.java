@@ -3,7 +3,9 @@ package fr.ensim.superprojetavion.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,11 +94,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                 e.printStackTrace();
                             }
 
-                            if(snowtamInfo!=null) snowtam = new CodeInfo(snowtamInfo,currentAirport);
+                            if(snowtamInfo!=null) {
+                                snowtam = new CodeInfo(snowtamInfo,currentAirport);
+                                Intent intent = new Intent(context, CodeActivity.class);
+                                intent.putExtra("snowtam", snowtam);
+                                intent.putExtra("airport",(Parcelable)currentAirport);
+                                context.startActivity(intent);
+                            }
+                            else{
+                                //Pas de snowtam
+                                //Afficher un truc?
+                            }
 
-                            Intent intent = new Intent(context, CodeActivity.class);
-                            intent.putExtra("snowtam", snowtam);
-                            context.startActivity(intent);
                         }
                     };
 
