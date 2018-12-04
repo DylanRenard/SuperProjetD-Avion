@@ -2,7 +2,7 @@
     <string name="app_name"></string>
     <string name="title_activity_maps">Map</string>
     <string name="airport"></string>
-    <string name="oaci">OACI</string>
+    <string name="oaci"></string>
     <string name="homeName" />
     <string name="codeName" />
     <string name="mapName" />
