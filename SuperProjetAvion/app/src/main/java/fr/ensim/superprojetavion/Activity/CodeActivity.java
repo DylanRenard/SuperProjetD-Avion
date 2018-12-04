@@ -46,6 +46,8 @@ public class CodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
+        super.setTitle(getString(R.string.codeName));
+
 
         importFavorisList();
         allAirportList = favorisList;

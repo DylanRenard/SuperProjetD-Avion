@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="airport">Aeroport</string>
+    <string name="app_name">Snowtam</string>
+    <string name="title_activity_maps">Carte</string>
+    <string name="airport">Aéroport</string>
+    <string name="oaci">OACI</string>
+    <string name="homeName" >Accueil</string>
+    <string name="codeName" >Snowtam</string>
+    <string name="mapName" >Carte</string>
+    <string name="searchName" >Résultat de la recherche</string>
+    <string name="settingsName" >Paramètres</string>
 </resources>

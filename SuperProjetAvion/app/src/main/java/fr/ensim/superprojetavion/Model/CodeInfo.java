@@ -61,8 +61,8 @@ public class CodeInfo implements Parcelable{
     private AirportInfo airport;
 
     //WARNING ! C à P CAN BE MULTIPLES
-    private String code_location;                       // A) aerodrome location indicator
-    private String code_date;                           // B) observation date & time
+    private String code_location;                                                        // A) aerodrome location indicator
+    private String code_date;                                                            // B) observation date & time
     private ArrayList<String> code_idRunway = new ArrayList<String>();                       // C) runway designator
     private ArrayList<String> code_clearedRunwayLength = new ArrayList<String>();            // D) cleared runway length
     private ArrayList<String> code_clearedRunwayWidth = new ArrayList<String>();             // E) cleared runway width
@@ -75,9 +75,9 @@ public class CodeInfo implements Parcelable{
     private ArrayList<String> code_anticipatedTimecompletion = new ArrayList<String>();      // M) further clearance expected to be completed
     private ArrayList<String> code_taxiwaysState = new ArrayList<String>();                  // N) taxiway
     private ArrayList<String> code_snowBanks = new ArrayList<String>();                      // P) taxiway snowbanks
-    private String code_parking;                        // R) apron
-    private String code_nextObservation;                // S) next planned observation/measurement
-    private String code_comment;                        // T) plain-language remarks
+    private String code_parking;                                                        // R) apron
+    private String code_nextObservation;                                                 // S) next planned observation/measurement
+    private String code_comment;                                                           // T) plain-language remarks
 
     private String decode_location;
     private String decode_date;
@@ -136,6 +136,7 @@ public class CodeInfo implements Parcelable{
         decode_comment = in.readString();
     }
 
+    // DISPLAY THE SNOWTAM
     public String toString(boolean code){
         String s;
         if(code) {
@@ -194,6 +195,7 @@ public class CodeInfo implements Parcelable{
         }
     };
 
+    // DECODE THE SNOTAM
     void onDecode() {
         //itérateur
         int i;

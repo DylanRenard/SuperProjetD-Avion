@@ -27,6 +27,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        super.setTitle(getString(R.string.mapName));
 
         Intent i = getIntent();
         airportInfo = i.getParcelableExtra("airport");
