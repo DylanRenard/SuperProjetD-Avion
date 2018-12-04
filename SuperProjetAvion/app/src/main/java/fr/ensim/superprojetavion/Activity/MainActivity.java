@@ -3,9 +3,11 @@ package fr.ensim.superprojetavion.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Log.w("FAVORIS" , ""+favorisList);
         if(favorisList!=null){
             final RecyclerView list =(RecyclerView) findViewById(R.id.list);
             list.setLayoutManager(new LinearLayoutManager(this));
@@ -67,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         importFavorisList();
+        Log.w("FAVORIS resume" , ""+favorisList);
+        if(favorisList!=null){
+            final RecyclerView list =(RecyclerView) findViewById(R.id.list);
+            list.setLayoutManager(new LinearLayoutManager(this));
+            list.setAdapter(new MyAdapter(favorisList));
+        }
     }
 
     @Override
@@ -84,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 result = OaciService.getAirportInfo(oaci);
 
                 Intent i = new Intent(MainActivity.this, SearchActivity.class);
-                i.putExtra("result", result);
+                i.putExtra("result", (Parcelable)result);
                 startActivity(i);
             }
         });

@@ -1,10 +1,11 @@
 package fr.ensim.superprojetavion.Activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class SearchActivity extends AppCompatActivity {
 
     ArrayList<AirportInfo> favorisList;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +55,6 @@ public class SearchActivity extends AppCompatActivity {
         Intent i = getIntent();
         result = i.getParcelableExtra("result");
         result.setfavoris(false);
-
-        for (AirportInfo fav : favorisList){
-            if(fav.getOaciCode().equals(result.getOaciCode())) result.setfavoris(true);
-        }
 
         ImageView flag = findViewById(R.id.flag);
         new DownloadImageTask(flag).execute(result.getFlag());
@@ -70,59 +68,93 @@ public class SearchActivity extends AppCompatActivity {
         TextView description = findViewById(R.id.description);
         description.setText("Latitude : " + result.getLatitude() + "\nLongitude : " + result.getLongitude());
 
-        ImageButton favIcon = findViewById(R.id.favorisIcon);
+        final ImageButton favIcon = findViewById(R.id.favorisIcon);
         favIcon.setOnClickListener(new View.OnClickListener(){
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View view) {
                 if(result.isfavoris()){
                     result.setfavoris(false);
+                    favIcon.setImageResource(0x0108000b);
                 }
-                else result.setfavoris(true);
+                else {
+                    result.setfavoris(true);
+                    favIcon.setImageResource(0x0108000c);
+                }
             }
         });
 
-        Button toSnowtam;
-        
+        for (AirportInfo fav : favorisList){
+            if(fav.getOaciCode().equals(result.getOaciCode())) {
+                result.setfavoris(true);
+                favIcon.setImageResource(0x0108000c);
+            }
+        }
 
-        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
+        TextView phoneNumber = findViewById(R.id.phoneNumber);
+        phoneNumber.setText(result.getPhoneNumber());
+
+        Button toSnowtam = findViewById(R.id.toSnowtam);
+        toSnowtam.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(JSONArray response) {
-                String snowtamInfo = null;
-                int i;
+            public void onClick(View v) {
+                Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        String snowtamInfo = null;
+                        int i;
 
-                try{
-                    for (i=0 ; i<response.length() ; i++) {
-                        JSONObject info = response.getJSONObject(i);
+                        try{
+                            for (i=0 ; i<response.length() ; i++) {
+                                JSONObject info = response.getJSONObject(i);
 
-                        if(info.getString("id").contains("SW")){
-                            snowtamInfo = info.getString("all");
+                                if(info.getString("id").contains("SW")){
+                                    snowtamInfo = info.getString("all");
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+
+                        if(snowtamInfo!=null) snowtam = new CodeInfo(snowtamInfo,result);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                };
 
-                if(snowtamInfo!=null) snowtam = new CodeInfo(snowtamInfo,result);
+                Response.ErrorListener errorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                };
+
+                SnowtamService.searchSnowtam(result.getOaciCode(),responseListener,errorListener,SearchActivity.this);
             }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        };
-
-        SnowtamService.searchSnowtam(result.getOaciCode(),responseListener,errorListener,SearchActivity.this);
+        });
     }
 
     @Override
-    protected void onDestroy(){
-        super.onDestroy();
+    protected void onStop(){
+        super.onStop();
 
-        if(result.isfavoris()) favorisList.add(result);
+        boolean inList = false;
+
+        for (AirportInfo fav : favorisList){
+            if(fav.getOaciCode().equals(result.getOaciCode())) {
+                inList = true;
+                if(!result.isfavoris()) favorisList.remove(fav);
+                break;
+            }
+        }
+        if(result.isfavoris() && !inList) favorisList.add(result);
 
         saveFavorisList();
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+
+        onStop();
     }
 
     private void saveFavorisList() {

@@ -1,16 +1,12 @@
 package fr.ensim.superprojetavion.Adapter;
 
-import android.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.R;
@@ -20,14 +16,6 @@ import fr.ensim.superprojetavion.R;
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private final List<Pair<String, String>> airports =  Arrays.asList(
-            Pair.create("ESSA", "Stockholm Arlanda"),
-            Pair.create("LFPO", "Paris Orly"),
-            Pair.create("LICC", "Catania Fontanarossa"),
-            Pair.create("KJFK", "JFK New York"),
-            Pair.create("KJFK", "JFK New York")
-
-    );
 
     private ArrayList<AirportInfo> airportInfoList;
 
@@ -51,7 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return airports.size();
+        return airportInfoList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

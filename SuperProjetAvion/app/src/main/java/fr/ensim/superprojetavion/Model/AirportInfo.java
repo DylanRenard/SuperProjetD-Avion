@@ -4,7 +4,9 @@ package fr.ensim.superprojetavion.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class AirportInfo implements Parcelable{
+import java.io.Serializable;
+
+public class AirportInfo implements Serializable,Parcelable{
     private String oaciCode;
     private String airportName;
     private double latitude;
