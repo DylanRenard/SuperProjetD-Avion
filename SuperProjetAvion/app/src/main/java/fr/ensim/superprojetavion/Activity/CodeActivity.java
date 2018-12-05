@@ -51,9 +51,10 @@ public class CodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_code);
         super.setTitle(getString(R.string.codeName));
 
-
         importFavorisList();
         allAirportList = favorisList;
+
+
 
         Intent i = getIntent();
 
@@ -76,13 +77,28 @@ public class CodeActivity extends AppCompatActivity {
 
         final Switch switchCode = findViewById(R.id.switchCode);
 
+        try {
+            FileInputStream fis = openFileInput("settings.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            switchCode.setChecked((boolean) ois.readObject());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            switchCode.setChecked(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+            switchCode.setChecked(false);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            switchCode.setChecked(false);
+        }
+
         final TextView snowtamText = findViewById(R.id.snowtam);
-        snowtamText.setText(snowtam.toString(switchCode.isChecked()));
+        snowtamText.setText(snowtam.toString(!switchCode.isChecked()));
 
         switchCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                snowtamText.setText(snowtam.toString(switchCode.isChecked()));
+                snowtamText.setText(snowtam.toString(!switchCode.isChecked()));
             }
         });
 
