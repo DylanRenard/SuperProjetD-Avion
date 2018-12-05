@@ -11,8 +11,12 @@
     <string name="settingsName" >Settings</string>
     <string name="searchToast">unknown or wrong ICAO code</string>
     <string name="noConnectionToast">Connection issue\nPlease check your internet connection</string>
-    <string name="param1">Show snowtam by default</string>
+    <string name="noSnowtamToast">No snowtam for this airport</string>
+    <string name="addFavorite" >Added to favorite</string>
+    <string name="addFavoriteToast">Added to favorite</string>
+    <string name="removeFavToast" >Removed from favorite</string>
+    <string name="param1">Snowtam displayed by default</string>
     <string name="code">Coded</string>
     <string name="decode">Decoded</string>
-    <string name="saveAndHome">Save\nand\nReturn to home</string>
+    <string name="saveAndHome">\t Save \t</string>
 </resources>

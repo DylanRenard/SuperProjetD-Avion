@@ -14,4 +14,8 @@
     <string name="addFavorite" />
     <string name="addFavoriteToast" />
     <string name="removeFavToast" />
+    <string name="param1"/>
+    <string name="code"/>
+    <string name="decode"/>
+    <string name="saveAndHome"/>
 </resources>
