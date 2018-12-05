@@ -74,11 +74,17 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(result.isfavoris()){
                     result.setfavoris(false);
-                    favIcon.setImageResource(0x0108000b);
+                    favIcon.setImageResource(R.drawable.snow1);
+                    String toastText = getString(R.string.removeFavToast);
+                    Toast toast = Toast.makeText(SearchActivity.this, toastText, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 else {
                     result.setfavoris(true);
-                    favIcon.setImageResource(0x0108000c);
+                    favIcon.setImageResource(R.drawable.snow2);
+                    String toastfav = getString(R.string.addFavoriteToast);
+                    Toast toast = Toast.makeText(SearchActivity.this, toastfav, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
@@ -86,7 +92,7 @@ public class SearchActivity extends AppCompatActivity {
         for (AirportInfo fav : favorisList){
             if(fav.getOaciCode().equals(result.getOaciCode())) {
                 result.setfavoris(true);
-                favIcon.setImageResource(0x0108000c);
+                favIcon.setImageResource(R.drawable.snow2);
             }
         }
 

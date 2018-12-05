@@ -10,12 +10,12 @@
         android:id="@+id/favorisIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_off" />
+        app:srcCompat="@drawable/snow1" />
 
     <ImageView
         android:id="@+id/flag"
@@ -73,13 +73,15 @@
 
     <ImageView
         android:id="@+id/phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="23dp"
+        android:layout_height="24dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/holo_blue_light"
+        android:background="@android:color/transparent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneNumber"
         app:layout_constraintStart_toStartOf="@+id/description"
         app:layout_constraintTop_toBottomOf="@+id/description"
-        app:srcCompat="@android:drawable/stat_sys_phone_call" />
+        app:srcCompat="@android:drawable/sym_action_call" />
 
     <TextView
         android:id="@+id/phoneNumber"

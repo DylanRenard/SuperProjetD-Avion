@@ -11,4 +11,7 @@
     <string name="searchToast"/>
     <string name="noConnectionToast"/>
     <string name="noSnowtamToast" />
+    <string name="addFavorite" />
+    <string name="addFavoriteToast" />
+    <string name="removeFavToast" />
 </resources>

@@ -44,7 +44,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/oaci"
-        android:textSize="32sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toEndOf="@+id/flag"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,10 +52,10 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/codeName"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/map"
         app:layout_constraintStart_toEndOf="@+id/flag" />
 
