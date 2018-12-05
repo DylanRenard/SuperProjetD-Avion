@@ -5,6 +5,8 @@ import android.media.Image;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +63,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Button left = findViewById(R.id.left);
+        Button righ = findViewById(R.id.right);
 
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int currentIndex = 0;
+                for(AirportInfo test : allAirportList){
+                    if(test.getOaciCode().equals(airportInfo.getOaciCode())) currentIndex = allAirportList.indexOf(test);
+                }
+
+                AirportInfo previous = allAirportList.get((currentIndex-1)%allAirportList.size());
+
+                Intent i = new Intent(MapsActivity.this, MapsActivity.class);
+                i.putExtra("airport", (Parcelable)previous);
+                i.putExtra("allAirportList", allAirportList);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        righ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int currentIndex = 0;
+                for(AirportInfo test : allAirportList){
+                    if(test.getOaciCode().equals(airportInfo.getOaciCode())) currentIndex = allAirportList.indexOf(test);
+                }
+
+                AirportInfo next = allAirportList.get((currentIndex+1)%allAirportList.size());
+
+                Intent i = new Intent(MapsActivity.this, MapsActivity.class);
+                i.putExtra("airport", (Parcelable)next);
+                i.putExtra("allAirportList", allAirportList);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
 

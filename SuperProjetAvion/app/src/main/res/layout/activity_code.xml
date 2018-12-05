@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context="fr.ensim.superprojetavion.Activity.CodeActivity">
 
+    <ImageButton
+        android:id="@+id/favorisIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_star_big_off" />
+
     <ImageView
         android:id="@+id/flag"
         android:layout_width="wrap_content"
@@ -33,9 +44,9 @@
         android:id="@+id/switchCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/favorisIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
