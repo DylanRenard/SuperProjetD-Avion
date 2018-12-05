@@ -3,16 +3,12 @@ package fr.ensim.superprojetavion.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
@@ -26,7 +22,7 @@ import java.util.ArrayList;
 import fr.ensim.superprojetavion.Adapter.MyAdapter;
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.R;
-import fr.ensim.superprojetavion.Service.OaciService;
+import fr.ensim.superprojetavion.Service.oaciService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -128,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                result = OaciService.getAirportInfo(oaci);
+                result = oaciService.getAirportInfo(oaci);
             }
         });
 

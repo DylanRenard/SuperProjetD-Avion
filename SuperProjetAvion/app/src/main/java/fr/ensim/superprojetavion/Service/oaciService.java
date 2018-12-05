@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 
-public class OaciService {
+public class oaciService {
     public static AirportInfo getAirportInfo(String oaci){
 
         try {

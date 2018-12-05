@@ -68,7 +68,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private final TextView codeAirport;
         private final TextView nameAirport;
-        private final ImageView flag = null;
+        private final ImageView flag;
 
 
         private AirportInfo currentAirport;
@@ -77,8 +77,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             super(itemView);
             codeAirport = ((TextView) itemView.findViewById(R.id.codeAirport));
             nameAirport = ((TextView) itemView.findViewById(R.id.nameAirport));
-            ImageView flag = ((ImageView) itemView.findViewById(R.id.flag));
-           // new DownloadImageTask(flag).execute(result.getFlag());
+            flag = ((ImageView) itemView.findViewById(R.id.flag));
+
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +137,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             currentAirport = airport;
             codeAirport.setText(airport.getOaciCode());
             nameAirport.setText(airport.getAirportName());
+            new DownloadImageTask(flag).execute(currentAirport.getFlag());
+
         }
     }
 }
