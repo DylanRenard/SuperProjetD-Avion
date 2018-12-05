@@ -53,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         oaci.setText(airportInfo.getOaciCode());
 
         TextView name = findViewById(R.id.name);
-        name.setText(airportInfo.getAirportName());
+        name.setText(airportInfo.getAirportName().substring(airportInfo.getAirportName().indexOf("(")));
 
         ImageView flag = findViewById(R.id.flag);
         new DownloadImageTask(flag).execute(airportInfo.getFlag());

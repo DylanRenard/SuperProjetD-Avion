@@ -12,4 +12,8 @@
     <string name="searchToast">Code OACI invalide ou inconnu</string>
     <string name="noConnectionToast">Erreur de connexion\nVeuillez verifier votre connexion internet</string>
     <string name="noSnowtamToast">Pas de snowtam disponible</string>
+    <string name="param1">Affichage du Snowtam par défault</string>
+    <string name="code">Codé</string>
+    <string name="decode">Décodé</string>
+    <string name="saveAndHome">Enregistrer\net\nRevenir à l\'Accueil</string>
 </resources>
