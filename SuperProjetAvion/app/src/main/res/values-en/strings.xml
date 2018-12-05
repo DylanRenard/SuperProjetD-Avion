@@ -9,4 +9,6 @@
     <string name="mapName" >Map</string>
     <string name="searchName" >Result</string>
     <string name="settingsName" >Settings</string>
+    <string name="searchToast">unknown or wrong ICAO code</string>
+    <string name="noConnectionToast">Connection issue\\nPlease check your internet connection</string>
 </resources>

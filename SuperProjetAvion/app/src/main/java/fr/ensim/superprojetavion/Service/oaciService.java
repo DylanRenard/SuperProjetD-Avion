@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 
@@ -36,10 +37,18 @@ public class OaciService {
 
             return result;
 
+        } catch (UnknownHostException e) {
+            AirportInfo noConnection = new AirportInfo();
+            noConnection.setAirportName("noConnection");
+            return noConnection;
+        } catch (NullPointerException e) {
+            AirportInfo noResult = new AirportInfo();
+            noResult.setAirportName("noResult");
+            return noResult;
         } catch (IOException e) {
-            e.printStackTrace();
+            AirportInfo ioEx = new AirportInfo();
+            ioEx.setAirportName("ioEx");
+            return ioEx;
         }
-
-        return null;
     }
 }

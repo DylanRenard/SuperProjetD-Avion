@@ -3,6 +3,7 @@ package fr.ensim.superprojetavion.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     @Override
@@ -92,11 +95,35 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
+
+                Looper.prepare();
+
                 result = OaciService.getAirportInfo(oaci);
 
-                Intent i = new Intent(MainActivity.this, SearchActivity.class);
-                i.putExtra("result", (Parcelable)result);
-                startActivity(i);
+                String toastText;
+                Toast toast;
+
+                switch(result.getAirportName()){
+                    case "noConnection" :
+                        toastText = getString(R.string.noConnectionToast);
+                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
+                        break;
+                    case "noResult" :
+                        toastText = getString(R.string.searchToast);
+                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
+                        break;
+                    case "ioEx" :
+                        toastText = getString(R.string.searchToast);
+                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
+                        break;
+                    default:
+                        Intent i = new Intent(MainActivity.this, SearchActivity.class);
+                        i.putExtra("result", (Parcelable)result);
+                        startActivity(i);
+                }
             }
         });
 

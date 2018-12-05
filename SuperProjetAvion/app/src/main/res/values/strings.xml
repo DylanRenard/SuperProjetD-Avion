@@ -8,4 +8,6 @@
     <string name="mapName" />
     <string name="searchName" />
     <string name="settingsName" />
+    <string name="searchToast"/>
+    <string name="noConnectionToast"/>
 </resources>
