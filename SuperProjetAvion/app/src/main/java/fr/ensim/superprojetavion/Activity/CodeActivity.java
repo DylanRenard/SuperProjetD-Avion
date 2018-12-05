@@ -1,5 +1,6 @@
 package fr.ensim.superprojetavion.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
@@ -43,6 +44,7 @@ public class CodeActivity extends AppCompatActivity {
 
     private ArrayList<AirportInfo> allAirportList;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,6 +222,54 @@ public class CodeActivity extends AppCompatActivity {
                 SnowtamService.searchSnowtam(next.getOaciCode(),responseListener,errorListener,CodeActivity.this);
             }
         });
+
+        final ImageButton favIcon = findViewById(R.id.favorisIcon);
+        favIcon.setOnClickListener(new View.OnClickListener(){
+            @SuppressLint("ResourceType")
+            @Override
+            public void onClick(View view) {
+                if(airport.isfavoris()){
+                    airport.setfavoris(false);
+                    favIcon.setImageResource(0x0108000b);
+                }
+                else {
+                    airport.setfavoris(true);
+                    favIcon.setImageResource(0x0108000c);
+                }
+            }
+        });
+
+        for (AirportInfo fav : favorisList){
+            if(fav.getOaciCode().equals(airport.getOaciCode())) {
+                airport.setfavoris(true);
+                favIcon.setImageResource(0x0108000c);
+            }
+        }
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+
+        boolean inList = false;
+
+        for (AirportInfo fav : favorisList){
+            if(fav.getOaciCode().equals(airport.getOaciCode())) {
+                inList = true;
+                if(!airport.isfavoris()) favorisList.remove(fav);
+                break;
+            }
+        }
+        if(airport.isfavoris() && !inList) favorisList.add(airport);
+
+        saveFavorisList();
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        onStop();
+        finish();
     }
 
     private void saveFavorisList() {
