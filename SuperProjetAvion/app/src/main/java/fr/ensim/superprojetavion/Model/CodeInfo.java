@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Dana on 15/11/2018.
- */
-
 public class CodeInfo implements Parcelable{
 
     public CodeInfo(String info, AirportInfo airportInfo){

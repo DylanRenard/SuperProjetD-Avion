@@ -1,12 +1,10 @@
 package fr.ensim.superprojetavion.Activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -37,39 +35,46 @@ import fr.ensim.superprojetavion.Service.SnowtamService;
 
 public class SearchActivity extends AppCompatActivity {
 
+    //airport info from result
     AirportInfo result;
+    //snowtam to go to codeActivity
     CodeInfo snowtam;
-
+    //list of favorite airports
     ArrayList<AirportInfo> favorisList;
 
-    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         super.setTitle(getString(R.string.searchName));
 
+        //retreive favorite list from file
         importFavorisList();
 
+        //retreive airport info from intent
         Intent i = getIntent();
         result = i.getParcelableExtra("result");
         result.setfavoris(false);
 
+        //set flag picture
         ImageView flag = findViewById(R.id.flag);
         new DownloadImageTask(flag).execute(result.getFlag());
 
+        //set icao text
         TextView oaciCode = findViewById(R.id.codeAirport);
         oaciCode.setText(result.getOaciCode());
 
+        //set airport name text
         TextView airportName = findViewById(R.id.nameAirport);
         airportName.setText(result.getAirportName());
 
+        //set airport description text
         TextView description = findViewById(R.id.description);
         description.setText("Latitude : " + result.getLatitude() + "\nLongitude : " + result.getLongitude());
 
+        //button to add airport to or remove airport from favorite list
         final ImageButton favIcon = findViewById(R.id.favorisIcon);
         favIcon.setOnClickListener(new View.OnClickListener(){
-            @SuppressLint("ResourceType")
             @Override
             public void onClick(View view) {
                 if(result.isfavoris()){
@@ -89,6 +94,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        //set favorite picture depending of airport already present in favorite list
         for (AirportInfo fav : favorisList){
             if(fav.getOaciCode().equals(result.getOaciCode())) {
                 result.setfavoris(true);
@@ -96,9 +102,11 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
 
+        //set phone number text
         TextView phoneNumber = findViewById(R.id.phoneNumber);
         phoneNumber.setText(result.getPhoneNumber());
 
+        //button to go to codeActivity with the corresponding snowtam
         Button toSnowtam = findViewById(R.id.toSnowtam);
         toSnowtam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +160,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    //update favorite list when exiting the activity
     @Override
     protected void onStop(){
         super.onStop();
@@ -170,6 +179,7 @@ public class SearchActivity extends AppCompatActivity {
         saveFavorisList();
     }
 
+    //make sure that favorite list is updated then finish the activity
     @Override
     public void onBackPressed(){
         super.onBackPressed();
@@ -177,6 +187,7 @@ public class SearchActivity extends AppCompatActivity {
         finish();
     }
 
+    //function to save favorite in file
     private void saveFavorisList() {
         FileOutputStream outputStream;
         ObjectOutputStream oos;
@@ -192,6 +203,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    //function to retreive favorite list from file
     private void importFavorisList() {
         try {
             FileInputStream fis = openFileInput("favoris.txt");

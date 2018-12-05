@@ -28,7 +28,9 @@ import fr.ensim.superprojetavion.Service.oaciService;
 
 public class MainActivity extends AppCompatActivity {
 
+    //List of favorite airports
     ArrayList<AirportInfo> favorisList;
+    //Airport info from search
     AirportInfo result = null;
 
     @Override
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setLogo(R.drawable.justplane);
 
-
+        //Search bar
         final SearchView search = findViewById(R.id.searchView);
         search.setIconified(false);
         search.setQueryHint(getString(R.string.oaci));
@@ -55,12 +57,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //listener to submit the search request
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 result = null;
                 search(s.toUpperCase());
 
+                //wait while no result yet
                 while(result==null) {
                     try {
                         Thread.sleep(200);
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast toast;
 
                 switch(result.getAirportName()){
+                    //Toast to inform user if there is something wrong
                     case "noConnection" :
                         toastText = getString(R.string.noConnectionToast);
                         toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
                         toast.show();
                         break;
+                    //ready to go to searchActivity
                     default:
                         Intent i = new Intent(MainActivity.this, SearchActivity.class);
                         i.putExtra("result", (Parcelable)result);
@@ -95,12 +101,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
+            //only return true to prevent default action to execute
             @Override
             public boolean onQueryTextChange(String s) {
                 return true;
             }
         });
 
+        //button to go to settingsActivity
         ImageButton settings = findViewById(R.id.settings);
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //retreive favorite list when returning to mainActivity
     @Override
     protected void onResume(){
         super.onResume();
@@ -122,12 +131,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //save favorite list when app exiting
     @Override
     protected void onDestroy(){
         super.onDestroy();
         saveFavorisList();
     }
 
+    //asynchronous function to get airport infos
     private void search(final String oaci){
 
         Thread t = new Thread(new Runnable(){
@@ -141,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         t.start();
     }
 
+    //function to save favorite list in file
     private void saveFavorisList() {
         FileOutputStream outputStream;
         ObjectOutputStream oos;
@@ -156,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //function to retreive favorite list from file
     private void importFavorisList() {
         try {
             FileInputStream fis = openFileInput("favoris.txt");

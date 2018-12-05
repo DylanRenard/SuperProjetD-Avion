@@ -1,10 +1,9 @@
 package fr.ensim.superprojetavion.Activity;
 
 import android.content.Intent;
-import android.media.Image;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,8 +34,12 @@ import fr.ensim.superprojetavion.Service.SnowtamService;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    //current airport
     private AirportInfo airportInfo;
+    //list of airport to go back to CodeActivity
     private ArrayList<AirportInfo> allAirportList;
+    //snowtam to go back to CodeActivity
     private CodeInfo snowtam;
 
     @Override
@@ -45,16 +48,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         super.setTitle(getString(R.string.mapName));
 
+        //retreive infos from intent
         Intent i = getIntent();
         airportInfo = i.getParcelableExtra("airport");
         allAirportList = i.getParcelableArrayListExtra("allAirportList");
 
+        //set icao text
         TextView oaci = findViewById(R.id.oaci);
         oaci.setText(airportInfo.getOaciCode());
 
+        //set airport abbreviation name
         TextView name = findViewById(R.id.name);
         name.setText(airportInfo.getAirportName().substring(airportInfo.getAirportName().indexOf("(")));
 
+        //set flag picture
         ImageView flag = findViewById(R.id.flag);
         new DownloadImageTask(flag).execute(airportInfo.getFlag());
 
@@ -63,6 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //buttons to browse the airport list
         Button left = findViewById(R.id.left);
         Button righ = findViewById(R.id.right);
 
@@ -70,11 +78,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
+                //get the index of the current airport
                 int currentIndex = 0;
                 for(AirportInfo test : allAirportList){
                     if(test.getOaciCode().equals(airportInfo.getOaciCode())) currentIndex = allAirportList.indexOf(test);
                 }
 
+                //get the previous airport on the list
                 AirportInfo previous = allAirportList.get((currentIndex-1)%allAirportList.size());
 
                 Intent i = new Intent(MapsActivity.this, MapsActivity.class);
@@ -89,11 +99,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
+                //get the index of the current airport
                 int currentIndex = 0;
                 for(AirportInfo test : allAirportList){
                     if(test.getOaciCode().equals(airportInfo.getOaciCode())) currentIndex = allAirportList.indexOf(test);
                 }
 
+                //get the next airport on the list
                 AirportInfo next = allAirportList.get((currentIndex+1)%allAirportList.size());
 
                 Intent i = new Intent(MapsActivity.this, MapsActivity.class);
@@ -128,6 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(airport, zoomLevel));
     }
 
+    //Return to codeActivity with snowtam corresponding to the current airport
     @Override
     public void onBackPressed(){
 

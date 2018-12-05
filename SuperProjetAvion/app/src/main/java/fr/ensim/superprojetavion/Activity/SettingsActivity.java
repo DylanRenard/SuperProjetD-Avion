@@ -1,8 +1,8 @@
 package fr.ensim.superprojetavion.Activity;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -13,9 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
-import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -26,8 +24,10 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         super.setTitle(getString(R.string.settingsName));
 
+        //parameter
         final Switch setting1 = findViewById(R.id.switchCode);
 
+        //set parameter value from parameter file
         try {
             FileInputStream fis = openFileInput("settings.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -43,6 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
             setting1.setChecked(false);
         }
 
+        //button to save parameter value in file
         Button save = findViewById(R.id.saveAndHome);
         save.setOnClickListener(new View.OnClickListener() {
             @Override

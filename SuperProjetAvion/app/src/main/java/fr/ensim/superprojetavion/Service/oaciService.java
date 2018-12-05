@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 
 import fr.ensim.superprojetavion.Model.AirportInfo;
 
+//class to get airport info from it icao code asking www.world-airport-codes.com and parsing the result
 public class oaciService {
     public static AirportInfo getAirportInfo(String oaci){
 

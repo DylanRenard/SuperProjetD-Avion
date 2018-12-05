@@ -1,12 +1,10 @@
 package fr.ensim.superprojetavion.Activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -38,45 +36,51 @@ import fr.ensim.superprojetavion.Service.SnowtamService;
 
 public class CodeActivity extends AppCompatActivity {
 
+    //Snowtam corresponding to the current airport
     private CodeInfo snowtam ;
+    //Current airport
     private AirportInfo airport;
+    //List of favorite airports
     private ArrayList<AirportInfo> favorisList;
 
+    //List of favorite airports plus searched airport if coming from SearchActivity
     private ArrayList<AirportInfo> allAirportList;
 
-    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
         super.setTitle(getString(R.string.codeName));
 
+        //retreive list of favorite from file
         importFavorisList();
-        allAirportList = favorisList;
 
-
-
+        //retreive infos from intent
         Intent i = getIntent();
-
         snowtam = i.getParcelableExtra("snowtam");
         airport = i.getParcelableExtra("airport");
-
-        boolean inList = false;
-        for(AirportInfo airportInfo : favorisList){
-            if(airportInfo.getOaciCode().equals(airport.getOaciCode())) inList = true;
-        }
-        if (!inList) allAirportList.add(airport);
-
         if(i.getParcelableArrayListExtra("allAirportList")!=null) allAirportList = i.getParcelableArrayListExtra("allAirportList");
+        else{
+            allAirportList = favorisList;
 
+            //add current airport to the list if is not favorite
+            boolean inList = false;
+            for(AirportInfo airportInfo : favorisList){
+                if(airportInfo.getOaciCode().equals(airport.getOaciCode())) inList = true;
+            }
+            if (!inList) allAirportList.add(airport);
+        }
+
+        //set flag picture
         ImageView flag = findViewById(R.id.flag);
         new DownloadImageTask(flag).execute(airport.getFlag());
 
+        //set icao text
         TextView oaci = findViewById(R.id.oaci);
         oaci.setText(airport.getOaciCode());
 
+        //set switch mode depending of settings
         final Switch switchCode = findViewById(R.id.switchCode);
-
         try {
             FileInputStream fis = openFileInput("settings.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -92,9 +96,11 @@ public class CodeActivity extends AppCompatActivity {
             switchCode.setChecked(false);
         }
 
+        //set snowtam text depending of view mode
         final TextView snowtamText = findViewById(R.id.snowtam);
         snowtamText.setText(snowtam.toString(!switchCode.isChecked()));
 
+        //listener to change view mode
         switchCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +108,7 @@ public class CodeActivity extends AppCompatActivity {
             }
         });
 
+        //button to go to MapsActivity
         ImageButton map = findViewById(R.id.map);
         map.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +121,7 @@ public class CodeActivity extends AppCompatActivity {
             }
         });
 
+        //buttons to browse the airport list
         Button left = findViewById(R.id.left);
         Button righ = findViewById(R.id.right);
 
@@ -121,11 +129,13 @@ public class CodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //get the index of the current airport
                 int currentIndex = 0;
                 for(AirportInfo test : allAirportList){
                     if(test.getOaciCode().equals(airport.getOaciCode())) currentIndex = allAirportList.indexOf(test);
                 }
 
+                //get the previous airport on the list
                 final AirportInfo previous = allAirportList.get((currentIndex-1)%allAirportList.size());
 
                 Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
@@ -174,6 +184,7 @@ public class CodeActivity extends AppCompatActivity {
                     }
                 };
 
+                //get the snowtam of the previous airport
                 SnowtamService.searchSnowtam(previous.getOaciCode(),responseListener,errorListener,CodeActivity.this);
             }
         });
@@ -182,11 +193,13 @@ public class CodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //get the index of the current airport
                 int currentIndex = 0;
                 for(AirportInfo test : allAirportList){
                     if(test.getOaciCode().equals(airport.getOaciCode())) currentIndex = allAirportList.indexOf(test);
                 }
 
+                //get the next airport on the list
                 final AirportInfo next = allAirportList.get((currentIndex+1)%allAirportList.size());
 
                 Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
@@ -235,13 +248,14 @@ public class CodeActivity extends AppCompatActivity {
                     }
                 };
 
+                //get the snowtam of the next airport
                 SnowtamService.searchSnowtam(next.getOaciCode(),responseListener,errorListener,CodeActivity.this);
             }
         });
 
+        //favorite button
         final ImageButton favIcon = findViewById(R.id.favorisIcon);
         favIcon.setOnClickListener(new View.OnClickListener(){
-            @SuppressLint("ResourceType")
             @Override
             public void onClick(View view) {
                 if(airport.isfavoris()){
@@ -261,6 +275,7 @@ public class CodeActivity extends AppCompatActivity {
             }
         });
 
+        //initialize favorite button depending if airport is on favorite list
         for (AirportInfo fav : favorisList){
             if(fav.getOaciCode().equals(airport.getOaciCode())) {
                 airport.setfavoris(true);
@@ -269,6 +284,7 @@ public class CodeActivity extends AppCompatActivity {
         }
     }
 
+    //save favorite list before exiting the activity
     @Override
     protected void onStop(){
         super.onStop();
@@ -287,6 +303,7 @@ public class CodeActivity extends AppCompatActivity {
         saveFavorisList();
     }
 
+    //make sure that favorite list is saved then finish the activity
     @Override
     public void onBackPressed(){
         super.onBackPressed();
@@ -294,6 +311,7 @@ public class CodeActivity extends AppCompatActivity {
         finish();
     }
 
+    //function to save favorite list in file
     private void saveFavorisList() {
         FileOutputStream outputStream;
         ObjectOutputStream oos;
@@ -309,6 +327,7 @@ public class CodeActivity extends AppCompatActivity {
         }
     }
 
+    //function to retreive favorite list from file
     private void importFavorisList() {
         try {
             FileInputStream fis = openFileInput("favoris.txt");

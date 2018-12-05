@@ -1,11 +1,9 @@
 package fr.ensim.superprojetavion.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,22 +21,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import fr.ensim.superprojetavion.Activity.CodeActivity;
-import fr.ensim.superprojetavion.Activity.MainActivity;
-import fr.ensim.superprojetavion.Activity.SearchActivity;
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.Model.CodeInfo;
 import fr.ensim.superprojetavion.R;
 import fr.ensim.superprojetavion.Service.DownloadImageTask;
 import fr.ensim.superprojetavion.Service.SnowtamService;
 
-/**
- * Created by Dana on 29/11/2018.
- */
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private ArrayList<AirportInfo> airportInfoList;
     private Context context;
+
+    //list of airport to show
+    private ArrayList<AirportInfo> airportInfoList;
+    //snowtam to go to codeActivity
     private CodeInfo snowtam;
 
     public MyAdapter(ArrayList<AirportInfo> favorisList, Context context){
@@ -70,17 +65,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private final TextView nameAirport;
         private final ImageView flag;
 
-
         private AirportInfo currentAirport;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
+
             codeAirport = ((TextView) itemView.findViewById(R.id.codeAirport));
             nameAirport = ((TextView) itemView.findViewById(R.id.nameAirport));
             flag = ((ImageView) itemView.findViewById(R.id.flag));
 
-
-
+            //listener to go to codeActivity when user click on an item
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

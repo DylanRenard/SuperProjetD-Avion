@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class AirportInfo implements Serializable,Parcelable{
+
+    //Declaration
     private String oaciCode;
     private String airportName;
     private double latitude;
@@ -18,8 +20,10 @@ public class AirportInfo implements Serializable,Parcelable{
 
     private boolean favoris;
 
+    //builder
     public AirportInfo(){}
 
+    //Parcelable stuff
     protected AirportInfo(Parcel in) {
         oaciCode = in.readString();
         airportName = in.readString();
@@ -45,10 +49,30 @@ public class AirportInfo implements Serializable,Parcelable{
     };
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(oaciCode);
+        parcel.writeString(airportName);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
+        parcel.writeString(phoneNumber);
+        parcel.writeString(timeZone);
+        parcel.writeString(flag);
+        parcel.writeString(location);
+        parcel.writeByte((byte) (favoris ? 1 : 0));
+    }
+
+    //function to display info from airport
+    @Override
     public String toString(){
         return "name : "+this.airportName+"\noaci : "+this.oaciCode+"\nCoords : "+this.latitude+"/"+this.longitude;
     }
 
+    //getters and setters
     public boolean isfavoris() {
         return favoris;
     }
@@ -119,23 +143,5 @@ public class AirportInfo implements Serializable,Parcelable{
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(oaciCode);
-        parcel.writeString(airportName);
-        parcel.writeDouble(latitude);
-        parcel.writeDouble(longitude);
-        parcel.writeString(phoneNumber);
-        parcel.writeString(timeZone);
-        parcel.writeString(flag);
-        parcel.writeString(location);
-        parcel.writeByte((byte) (favoris ? 1 : 0));
     }
 }

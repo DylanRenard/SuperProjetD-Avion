@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+//class to get snowtam from icao.com data service api
 public class SnowtamService {
 
     public static void searchSnowtam(String icao,
