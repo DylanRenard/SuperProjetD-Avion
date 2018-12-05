@@ -11,4 +11,5 @@
     <string name="settingsName" >Paramètres</string>
     <string name="searchToast">Code OACI invalide ou inconnu</string>
     <string name="noConnectionToast">Erreur de connexion\nVeuillez verifier votre connexion internet</string>
+    <string name="noSnowtamToast">Pas de snowtam disponible</string>
 </resources>

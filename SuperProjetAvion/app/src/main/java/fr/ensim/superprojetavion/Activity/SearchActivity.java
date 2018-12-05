@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -122,8 +123,9 @@ public class SearchActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
-                            //Pas de snowtam
-                            //Afficher un truc?
+                            String toastText = getString(R.string.noSnowtamToast);
+                            Toast toast = Toast.makeText(SearchActivity.this, toastText, Toast.LENGTH_SHORT);
+                            toast.show();
                         }
 
                     }
@@ -133,6 +135,9 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        String toastText = getString(R.string.noConnectionToast);
+                        Toast toast = Toast.makeText(SearchActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 };
 
@@ -162,7 +167,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-
+        onStop();
         finish();
     }
 

@@ -2,11 +2,15 @@ package fr.ensim.superprojetavion.Activity;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -14,14 +18,24 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import fr.ensim.superprojetavion.Model.AirportInfo;
+import fr.ensim.superprojetavion.Model.CodeInfo;
 import fr.ensim.superprojetavion.R;
 import fr.ensim.superprojetavion.Service.DownloadImageTask;
+import fr.ensim.superprojetavion.Service.SnowtamService;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private AirportInfo airportInfo;
+    private ArrayList<AirportInfo> allAirportList;
+    private CodeInfo snowtam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Intent i = getIntent();
         airportInfo = i.getParcelableExtra("airport");
+        allAirportList = i.getParcelableArrayListExtra("allAirportList");
 
         TextView oaci = findViewById(R.id.oaci);
         oaci.setText(airportInfo.getOaciCode());
@@ -70,5 +85,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float zoomLevel = (float) 14.0;
         mMap.addMarker(new MarkerOptions().position(airport).title(airportInfo.getAirportName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(airport, zoomLevel));
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                String snowtamInfo = null;
+                int i;
+
+                try{
+                    for (i=0 ; i<response.length() ; i++) {
+                        JSONObject info = response.getJSONObject(i);
+
+                        if(info.getString("id").contains("SW")){
+                            snowtamInfo = info.getString("all");
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if(snowtamInfo!=null) {
+                    snowtam = new CodeInfo(snowtamInfo,airportInfo);
+                    Intent intent = new Intent(MapsActivity.this, CodeActivity.class);
+                    intent.putExtra("snowtam",snowtam);
+                    intent.putExtra("airport",(Parcelable)airportInfo);
+                    intent.putExtra("allAirportList", allAirportList);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    String toastText = getString(R.string.noSnowtamToast);
+                    Toast toast = Toast.makeText(MapsActivity.this, toastText, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        };
+
+        SnowtamService.searchSnowtam(airportInfo.getOaciCode(),responseListener,errorListener,MapsActivity.this);
+
     }
 }

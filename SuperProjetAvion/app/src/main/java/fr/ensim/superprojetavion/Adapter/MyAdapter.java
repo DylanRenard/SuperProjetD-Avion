@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -109,8 +110,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                 context.startActivity(intent);
                             }
                             else{
-                                //Pas de snowtam
-                                //Afficher un truc?
+                                String toastText = context.getString(R.string.noSnowtamToast);
+                                Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
+                                toast.show();
                             }
 
                         }
@@ -120,6 +122,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
+                            String toastText = context.getString(R.string.noConnectionToast);
+                            Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                     };
 

@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -89,6 +90,7 @@ public class CodeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent (CodeActivity.this, MapsActivity.class);
                 i.putExtra("airport",(Parcelable)airport);
+                i.putExtra("allAirportList", allAirportList);
                 startActivity(i);
                 finish();
             }
@@ -136,8 +138,9 @@ public class CodeActivity extends AppCompatActivity {
                             finish();
                         }
                         else {
-                            //Pas de snowtam
-                            //Afficher un truc?
+                            String toastText = getString(R.string.noSnowtamToast);
+                            Toast toast = Toast.makeText(CodeActivity.this, toastText, Toast.LENGTH_SHORT);
+                            toast.show();
                         }
 
                     }
@@ -147,6 +150,9 @@ public class CodeActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        String toastText = getString(R.string.noConnectionToast);
+                        Toast toast = Toast.makeText(CodeActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 };
 
@@ -193,8 +199,9 @@ public class CodeActivity extends AppCompatActivity {
                             finish();
                         }
                         else {
-                            //Pas de snowtam
-                            //Afficher un truc?
+                            String toastText = getString(R.string.noSnowtamToast);
+                            Toast toast = Toast.makeText(CodeActivity.this, toastText, Toast.LENGTH_SHORT);
+                            toast.show();
                         }
 
                     }
@@ -204,6 +211,9 @@ public class CodeActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        String toastText = getString(R.string.noConnectionToast);
+                        Toast toast = Toast.makeText(CodeActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 };
 
