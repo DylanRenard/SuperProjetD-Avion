@@ -10,5 +10,5 @@
     <string name="searchName" >Résultat de la recherche</string>
     <string name="settingsName" >Paramètres</string>
     <string name="searchToast">Code OACI invalide ou inconnu</string>
-    <string name="noConnectionToast">Erreur de connexion\\nVeuillez verifier votre connexion internet</string>
+    <string name="noConnectionToast">Erreur de connexion\nVeuillez verifier votre connexion internet</string>
 </resources>

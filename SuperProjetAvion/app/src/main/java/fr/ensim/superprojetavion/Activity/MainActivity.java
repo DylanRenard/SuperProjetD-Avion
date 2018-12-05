@@ -60,7 +60,40 @@ public class MainActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                result = null;
                 search(s.toUpperCase());
+
+                while(result==null) {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                String toastText;
+                Toast toast;
+
+                switch(result.getAirportName()){
+                    case "noConnection" :
+                        toastText = getString(R.string.noConnectionToast);
+                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
+                        break;
+                    case "noResult" :
+                        toastText = getString(R.string.searchToast);
+                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
+                        break;
+                    case "ioEx" :
+                        toastText = getString(R.string.searchToast);
+                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
+                        break;
+                    default:
+                        Intent i = new Intent(MainActivity.this, SearchActivity.class);
+                        i.putExtra("result", (Parcelable)result);
+                        startActivity(i);
+                }
                 return true;
             }
 
@@ -95,35 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-
-                Looper.prepare();
-
                 result = OaciService.getAirportInfo(oaci);
-
-                String toastText;
-                Toast toast;
-
-                switch(result.getAirportName()){
-                    case "noConnection" :
-                        toastText = getString(R.string.noConnectionToast);
-                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
-                        toast.show();
-                        break;
-                    case "noResult" :
-                        toastText = getString(R.string.searchToast);
-                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
-                        toast.show();
-                        break;
-                    case "ioEx" :
-                        toastText = getString(R.string.searchToast);
-                        toast = Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT);
-                        toast.show();
-                        break;
-                    default:
-                        Intent i = new Intent(MainActivity.this, SearchActivity.class);
-                        i.putExtra("result", (Parcelable)result);
-                        startActivity(i);
-                }
             }
         });
 
