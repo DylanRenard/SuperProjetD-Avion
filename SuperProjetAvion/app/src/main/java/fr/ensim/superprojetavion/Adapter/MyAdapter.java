@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -26,6 +27,7 @@ import fr.ensim.superprojetavion.Activity.SearchActivity;
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.Model.CodeInfo;
 import fr.ensim.superprojetavion.R;
+import fr.ensim.superprojetavion.Service.DownloadImageTask;
 import fr.ensim.superprojetavion.Service.SnowtamService;
 
 /**
@@ -65,6 +67,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private final TextView codeAirport;
         private final TextView nameAirport;
+        private final ImageView flag = null;
+
 
         private AirportInfo currentAirport;
 
@@ -72,6 +76,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             super(itemView);
             codeAirport = ((TextView) itemView.findViewById(R.id.codeAirport));
             nameAirport = ((TextView) itemView.findViewById(R.id.nameAirport));
+            ImageView flag = ((ImageView) itemView.findViewById(R.id.flag));
+           // new DownloadImageTask(flag).execute(result.getFlag());
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

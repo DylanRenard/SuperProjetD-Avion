@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         super.setTitle(getString(R.string.homeName));
 
-        ActionBar actionBar = getSupportActionBar();
+       ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         actionBar.setDisplayShowTitleEnabled(true);
