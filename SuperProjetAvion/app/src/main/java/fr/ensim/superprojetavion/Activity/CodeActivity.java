@@ -230,11 +230,17 @@ public class CodeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(airport.isfavoris()){
                     airport.setfavoris(false);
-                    favIcon.setImageResource(0x0108000b);
+                    favIcon.setImageResource(R.drawable.snow1);
+                    String toastText = getString(R.string.removeFavToast);
+                    Toast toast = Toast.makeText(CodeActivity.this, toastText, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 else {
                     airport.setfavoris(true);
-                    favIcon.setImageResource(0x0108000c);
+                    favIcon.setImageResource(R.drawable.snow2);
+                    String toastfav = getString(R.string.addFavoriteToast);
+                    Toast toast = Toast.makeText(CodeActivity.this, toastfav, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
@@ -242,7 +248,7 @@ public class CodeActivity extends AppCompatActivity {
         for (AirportInfo fav : favorisList){
             if(fav.getOaciCode().equals(airport.getOaciCode())) {
                 airport.setfavoris(true);
-                favIcon.setImageResource(0x0108000c);
+                favIcon.setImageResource(R.drawable.snow2);
             }
         }
     }

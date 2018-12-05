@@ -10,17 +10,17 @@
         android:id="@+id/favorisIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_off" />
+        app:srcCompat="@drawable/snow1" />
 
     <ImageView
         android:id="@+id/flag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
         android:layout_margin="30dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
@@ -33,9 +33,10 @@
         android:id="@+id/oaci"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/flag"
         app:layout_constraintStart_toEndOf="@+id/flag"
         app:layout_constraintTop_toTopOf="@+id/flag" />
@@ -44,8 +45,8 @@
         android:id="@+id/switchCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/favorisIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,10 +55,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flag" />
 
