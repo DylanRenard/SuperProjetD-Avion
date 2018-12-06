@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,8 +72,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         //buttons to browse the airport list
-        Button left = findViewById(R.id.left);
-        Button righ = findViewById(R.id.right);
+        ImageButton left = findViewById(R.id.left);
+        ImageButton righ = findViewById(R.id.right);
 
         left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 //get the previous airport on the list
-                AirportInfo previous = allAirportList.get((currentIndex-1)%allAirportList.size());
+                AirportInfo previous = allAirportList.get((currentIndex-1+allAirportList.size())%allAirportList.size());
 
                 Intent i = new Intent(MapsActivity.this, MapsActivity.class);
                 i.putExtra("airport", (Parcelable)previous);

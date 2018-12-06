@@ -122,8 +122,8 @@ public class CodeActivity extends AppCompatActivity {
         });
 
         //buttons to browse the airport list
-        Button left = findViewById(R.id.left);
-        Button righ = findViewById(R.id.right);
+        ImageButton left = findViewById(R.id.left);
+        ImageButton righ = findViewById(R.id.right);
 
         left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +136,7 @@ public class CodeActivity extends AppCompatActivity {
                 }
 
                 //get the previous airport on the list
-                final AirportInfo previous = allAirportList.get((currentIndex-1)%allAirportList.size());
+                final AirportInfo previous = allAirportList.get((currentIndex-1+allAirportList.size())%allAirportList.size());
 
                 Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
                     @Override
