@@ -22,36 +22,38 @@ public class CodeInfo implements Parcelable{
         if(info.contains("B) ")) {
             this.code_date = info.substring(info.indexOf("B) ")+3,info.indexOf(')',info.indexOf("B) ")+2)-1);
             info = info.substring(info.indexOf(')',info.indexOf("B) ")+2)-1);
+
+            while(info.contains("C) ")){
+                if(info.contains("C) ")) this.code_idRunway.add(i, info.substring(info.indexOf("C) ") + 3, info.indexOf(')', info.indexOf("C) ") + 2) - 1));
+                if(info.contains("D) ")) this.code_clearedRunwayLength.add(i, info.substring(info.indexOf("D) ") + 3, info.indexOf(')', info.indexOf("D) ") + 2) - 1));
+                if(info.contains("E) ")) this.code_clearedRunwayWidth.add(i, info.substring(info.indexOf("E) ") + 3, info.indexOf(')', info.indexOf("E) ") + 2) - 1));
+                if(info.contains("F) ")) this.code_conditionsRunway.add(i, info.substring(info.indexOf("F) ") + 3, info.indexOf(')', info.indexOf("F) ") + 2) - 1));
+                if(info.contains("G) ")) this.code_thickness.add(i, info.substring(info.indexOf("G) ") + 3, info.indexOf(')', info.indexOf("G) ") + 2) - 1));
+                if(info.contains("H) ")) this.code_frictionCoef.add(i, info.substring(info.indexOf("H) ") + 3, info.indexOf(')', info.indexOf("H) ") + 2) - 1));
+                if(info.contains("J) ")) this.code_criticalSnowbanks.add(i, info.substring(info.indexOf("J) ") + 3, info.indexOf(')', info.indexOf("J) ") + 2) - 1));
+                if(info.contains("K) ")) this.code_lightsObscured.add(i, info.substring(info.indexOf("K) ") + 3, info.indexOf(')', info.indexOf("K) ") + 2) - 1));
+                if(info.contains("L) ")) this.code_furtherClearance.add(i, info.substring(info.indexOf("L) ") + 3, info.indexOf(')', info.indexOf("L) ") + 2) - 1));
+                if(info.contains("M) ")) this.code_anticipatedTimecompletion.add(i, info.substring(info.indexOf("M) ") + 3, info.indexOf(')', info.indexOf("M) ") + 2) - 1));
+                if(info.contains("N) ")) this.code_taxiwaysState.add(i, info.substring(info.indexOf("N) ") + 3, info.indexOf(')', info.indexOf("N) ") + 2) - 1));
+                if(info.contains("P) ")) this.code_snowBanks.add(i, info.substring(info.indexOf("P) ") + 3, info.indexOf(')', info.indexOf("P) ") + 2) - 1));
+
+                if(info.indexOf("C)",info.indexOf("C)")+1)!=-1) info = info.substring(info.indexOf("C)",info.indexOf("C)")+1));
+                else break;
+                i++;
+            }
+
+            if(info.contains("R) ")) this.code_parking = info.substring(info.indexOf("R) ")+3,info.indexOf(')',info.indexOf("R) ")+2)-1);
+            else this.code_parking = null;
+            if(info.contains("S) ")) this.code_nextObservation = info.substring(info.indexOf("S) ")+3,info.indexOf(')',info.indexOf("S) ")+2)-1);
+            else this.code_nextObservation = null;
+            if(info.contains("T) ")) this.code_comment = info.substring(info.indexOf("T) ")+3,info.indexOf(')',info.indexOf("T) ")+2)-1);
+            else this.code_comment = null;
+
+            Log.w("snowtam : ", this.toString(true));
+
+            this.onDecode();
         }
         else this.code_date = null;
-
-        while(info.contains("C) ")){
-            if(info.contains("C) ")) this.code_idRunway.add(i, info.substring(info.indexOf("C) ") + 3, info.indexOf(')', info.indexOf("C) ") + 2) - 1));
-            if(info.contains("D) ")) this.code_clearedRunwayLength.add(i, info.substring(info.indexOf("D) ") + 3, info.indexOf(')', info.indexOf("D) ") + 2) - 1));
-            if(info.contains("E) ")) this.code_clearedRunwayWidth.add(i, info.substring(info.indexOf("E) ") + 3, info.indexOf(')', info.indexOf("E) ") + 2) - 1));
-            if(info.contains("F) ")) this.code_conditionsRunway.add(i, info.substring(info.indexOf("F) ") + 3, info.indexOf(')', info.indexOf("F) ") + 2) - 1));
-            if(info.contains("G) ")) this.code_thickness.add(i, info.substring(info.indexOf("G) ") + 3, info.indexOf(')', info.indexOf("G) ") + 2) - 1));
-            if(info.contains("H) ")) this.code_frictionCoef.add(i, info.substring(info.indexOf("H) ") + 3, info.indexOf(')', info.indexOf("H) ") + 2) - 1));
-            if(info.contains("J) ")) this.code_criticalSnowbanks.add(i, info.substring(info.indexOf("J) ") + 3, info.indexOf(')', info.indexOf("J) ") + 2) - 1));
-            if(info.contains("K) ")) this.code_lightsObscured.add(i, info.substring(info.indexOf("K) ") + 3, info.indexOf(')', info.indexOf("K) ") + 2) - 1));
-            if(info.contains("L) ")) this.code_furtherClearance.add(i, info.substring(info.indexOf("L) ") + 3, info.indexOf(')', info.indexOf("L) ") + 2) - 1));
-            if(info.contains("M) ")) this.code_anticipatedTimecompletion.add(i, info.substring(info.indexOf("M) ") + 3, info.indexOf(')', info.indexOf("M) ") + 2) - 1));
-            if(info.contains("N) ")) this.code_taxiwaysState.add(i, info.substring(info.indexOf("N) ") + 3, info.indexOf(')', info.indexOf("N) ") + 2) - 1));
-            if(info.contains("P) ")) this.code_snowBanks.add(i, info.substring(info.indexOf("P) ") + 3, info.indexOf(')', info.indexOf("P) ") + 2) - 1));
-
-            if(info.indexOf("C)",info.indexOf("C)")+1)!=-1) info = info.substring(info.indexOf("C)",info.indexOf("C)")+1));
-            else break;
-            i++;
-        }
-
-        if(info.contains("R) ")) this.code_parking = info.substring(info.indexOf("R) ")+3,info.indexOf(')',info.indexOf("R) ")+2)-1);
-        else this.code_parking = null;
-        if(info.contains("S) ")) this.code_nextObservation = info.substring(info.indexOf("S) ")+3,info.indexOf(')',info.indexOf("S) ")+2)-1);
-        else this.code_nextObservation = null;
-        if(info.contains("T) ")) this.code_comment = info.substring(info.indexOf("T) ")+3,info.indexOf(')',info.indexOf("T) ")+2)-1);
-        else this.code_comment = null;
-
-        this.onDecode();
     }
 
     private AirportInfo airport;

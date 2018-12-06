@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import fr.ensim.superprojetavion.Activity.CodeActivity;
+import fr.ensim.superprojetavion.Activity.SearchActivity;
 import fr.ensim.superprojetavion.Model.AirportInfo;
 import fr.ensim.superprojetavion.Model.CodeInfo;
 import fr.ensim.superprojetavion.R;
@@ -98,10 +99,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                             if(snowtamInfo!=null) {
                                 snowtam = new CodeInfo(snowtamInfo,currentAirport);
-                                Intent intent = new Intent(context, CodeActivity.class);
-                                intent.putExtra("snowtam", snowtam);
-                                intent.putExtra("airport",(Parcelable)currentAirport);
-                                context.startActivity(intent);
+                                if(snowtam.getCode_date()!=null){
+                                    Intent intent = new Intent(context, CodeActivity.class);
+                                    intent.putExtra("snowtam", snowtam);
+                                    intent.putExtra("airport",(Parcelable)currentAirport);
+                                    context.startActivity(intent);
+                                }
+                                else{
+                                    String toastText = context.getString(R.string.invalidSnowtam);
+                                    Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
                             }
                             else{
                                 String toastText = context.getString(R.string.noSnowtamToast);

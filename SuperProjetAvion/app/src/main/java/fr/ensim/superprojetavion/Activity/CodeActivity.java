@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -44,7 +45,7 @@ public class CodeActivity extends AppCompatActivity {
     private ArrayList<AirportInfo> favorisList;
 
     //List of favorite airports plus searched airport if coming from SearchActivity
-    private ArrayList<AirportInfo> allAirportList;
+    private ArrayList<AirportInfo> allAirportList = new ArrayList<AirportInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class CodeActivity extends AppCompatActivity {
         airport = i.getParcelableExtra("airport");
         if(i.getParcelableArrayListExtra("allAirportList")!=null) allAirportList = i.getParcelableArrayListExtra("allAirportList");
         else{
-            allAirportList = favorisList;
+            allAirportList.addAll(favorisList);
 
             //add current airport to the list if is not favorite
             boolean inList = false;
@@ -158,12 +159,19 @@ public class CodeActivity extends AppCompatActivity {
 
                         if(snowtamInfo!=null) {
                             snowtam = new CodeInfo(snowtamInfo,previous);
-                            Intent intent = new Intent(CodeActivity.this, CodeActivity.class);
-                            intent.putExtra("snowtam",snowtam);
-                            intent.putExtra("airport",(Parcelable)previous);
-                            intent.putExtra("allAirportList", allAirportList);
-                            startActivity(intent);
-                            finish();
+                            if(snowtam.getCode_date()!=null){
+                                Intent intent = new Intent(CodeActivity.this, CodeActivity.class);
+                                intent.putExtra("snowtam",snowtam);
+                                intent.putExtra("airport",(Parcelable)previous);
+                                intent.putExtra("allAirportList", allAirportList);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+                                String toastText = getString(R.string.invalidSnowtam);
+                                Toast toast = Toast.makeText(CodeActivity.this, toastText, Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
                         }
                         else {
                             String toastText = getString(R.string.noSnowtamToast);
@@ -222,12 +230,19 @@ public class CodeActivity extends AppCompatActivity {
 
                         if(snowtamInfo!=null) {
                             snowtam = new CodeInfo(snowtamInfo,next);
-                            Intent intent = new Intent(CodeActivity.this, CodeActivity.class);
-                            intent.putExtra("snowtam",snowtam);
-                            intent.putExtra("airport",(Parcelable)next);
-                            intent.putExtra("allAirportList", allAirportList);
-                            startActivity(intent);
-                            finish();
+                            if(snowtam.getCode_date()!=null){
+                                Intent intent = new Intent(CodeActivity.this, CodeActivity.class);
+                                intent.putExtra("snowtam",snowtam);
+                                intent.putExtra("airport",(Parcelable)next);
+                                intent.putExtra("allAirportList", allAirportList);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+                                String toastText = getString(R.string.invalidSnowtam);
+                                Toast toast = Toast.makeText(CodeActivity.this, toastText, Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
                         }
                         else {
                             String toastText = getString(R.string.noSnowtamToast);
@@ -277,6 +292,7 @@ public class CodeActivity extends AppCompatActivity {
 
         //initialize favorite button depending if airport is on favorite list
         for (AirportInfo fav : favorisList){
+            Log.w("testFavoris",""+fav.getOaciCode().equals(airport.getOaciCode()));
             if(fav.getOaciCode().equals(airport.getOaciCode())) {
                 airport.setfavoris(true);
                 favIcon.setImageResource(R.drawable.snow2);

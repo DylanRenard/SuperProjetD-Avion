@@ -165,12 +165,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 if(snowtamInfo!=null) {
                     snowtam = new CodeInfo(snowtamInfo,airportInfo);
-                    Intent intent = new Intent(MapsActivity.this, CodeActivity.class);
-                    intent.putExtra("snowtam",snowtam);
-                    intent.putExtra("airport",(Parcelable)airportInfo);
-                    intent.putExtra("allAirportList", allAirportList);
-                    startActivity(intent);
-                    finish();
+                    if(snowtam.getCode_date()!=null){
+                        Intent intent = new Intent(MapsActivity.this, CodeActivity.class);
+                        intent.putExtra("snowtam",snowtam);
+                        intent.putExtra("airport",(Parcelable)airportInfo);
+                        intent.putExtra("allAirportList", allAirportList);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        String toastText = getString(R.string.invalidSnowtam);
+                        Toast toast = Toast.makeText(MapsActivity.this, toastText, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
                 else {
                     String toastText = getString(R.string.noSnowtamToast);

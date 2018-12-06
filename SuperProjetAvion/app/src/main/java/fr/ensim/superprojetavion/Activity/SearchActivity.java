@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -102,6 +103,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
 
+        ImageView phone = findViewById(R.id.phone);
+        if(result.getPhoneNumber().length()<3) phone.setVisibility(View.GONE);
         //set phone number text
         TextView phoneNumber = findViewById(R.id.phoneNumber);
         phoneNumber.setText(result.getPhoneNumber());
@@ -123,6 +126,8 @@ public class SearchActivity extends AppCompatActivity {
 
                                 if(info.getString("id").contains("SW")){
                                     snowtamInfo = info.getString("all");
+
+                                    Log.w ("snowtam : ",snowtamInfo);
                                 }
                             }
                         } catch (JSONException e) {
@@ -131,10 +136,19 @@ public class SearchActivity extends AppCompatActivity {
 
                         if(snowtamInfo!=null) {
                             snowtam = new CodeInfo(snowtamInfo,result);
-                            Intent intent = new Intent(SearchActivity.this, CodeActivity.class);
-                            intent.putExtra("snowtam",snowtam);
-                            intent.putExtra("airport",(Parcelable)result);
-                            startActivity(intent);
+                            if(snowtam.getCode_date()!=null){
+                                Intent intent = new Intent(SearchActivity.this, CodeActivity.class);
+                                intent.putExtra("snowtam",snowtam);
+                                intent.putExtra("airport",(Parcelable)result);
+                                startActivity(intent);
+                                onStop();
+                                finish();
+                            }
+                            else{
+                                String toastText = getString(R.string.invalidSnowtam);
+                                Toast toast = Toast.makeText(SearchActivity.this, toastText, Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
                         }
                         else {
                             String toastText = getString(R.string.noSnowtamToast);
