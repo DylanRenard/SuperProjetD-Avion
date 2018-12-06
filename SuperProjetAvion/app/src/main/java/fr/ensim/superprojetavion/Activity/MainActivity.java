@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -129,6 +130,11 @@ public class MainActivity extends AppCompatActivity {
             list.setLayoutManager(new LinearLayoutManager(this));
             list.setAdapter(new MyAdapter(favorisList, MainActivity.this));
         }
+
+        //display logo of the app if favorite list is empty
+        ImageView logo = findViewById(R.id.logoAccueil);
+        if(favorisList!=null && favorisList.size()>0) logo.setVisibility(View.GONE);
+        else logo.setVisibility(View.VISIBLE);
     }
 
     //save favorite list when app exiting
