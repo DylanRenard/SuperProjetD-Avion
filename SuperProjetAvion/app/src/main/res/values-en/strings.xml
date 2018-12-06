@@ -19,4 +19,6 @@
     <string name="code">Coded</string>
     <string name="decode">Decoded</string>
     <string name="saveAndHome">\t Save \t</string>
+    <string name="invalidSnowtam">Invalid snowtam</string>
+
 </resources>
