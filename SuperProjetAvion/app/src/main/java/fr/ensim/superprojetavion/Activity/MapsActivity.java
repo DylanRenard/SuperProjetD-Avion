@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -139,6 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float zoomLevel = (float) 14.0;
         mMap.addMarker(new MarkerOptions().position(airport).title(airportInfo.getAirportName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(airport, zoomLevel));
+        mMap.setMapType(mMap.MAP_TYPE_SATELLITE);
     }
 
     //Return to codeActivity with snowtam corresponding to the current airport
